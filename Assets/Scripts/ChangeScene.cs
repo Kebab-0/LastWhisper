@@ -12,4 +12,10 @@ public class ChangeScene : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+
 }

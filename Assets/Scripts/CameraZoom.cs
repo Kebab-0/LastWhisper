@@ -1,7 +1,9 @@
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class CameraZoomToMonitor : MonoBehaviour
 {
+    public GameObject wall;
     public Camera cam;
     public Transform[] monitors;
     public Vector3 offset = new Vector3(0, 0, 0);
@@ -50,6 +52,7 @@ public class CameraZoomToMonitor : MonoBehaviour
                         targetPosition = monitor.position + offset;
                         targetSize = zoomedSize;
                         isZoomed = true;
+                        wall.SetActive(false);
                         break;
                     }
                 }
@@ -63,6 +66,7 @@ public class CameraZoomToMonitor : MonoBehaviour
             targetPosition = initialPosition;
             targetSize = initialSize;
             isZoomed = false;
+            wall.SetActive(true);
         }
 
 
