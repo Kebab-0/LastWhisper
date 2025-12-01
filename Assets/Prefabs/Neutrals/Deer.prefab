@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 619117041544557183}
   - component: {fileID: 4321297353985206506}
   - component: {fileID: 7917814889562311160}
-  - component: {fileID: 7494111775487218662}
+  - component: {fileID: 4310204822650814499}
   m_Layer: 0
   m_Name: Deer
   m_TagString: Untagged
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 7001742640823771089}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31686, y: 0.2218, z: 0.31686}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalPosition: {x: -205.45918, y: -74.21158, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,6 +63,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,6 +86,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -109,7 +112,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 50
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7494111775487218662
+--- !u!114 &4310204822650814499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,12 +121,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7001742640823771089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fad472463b81ff24d98aaa273edad0bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 554e39da0b533d54192cd613bcfa90e9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deer
   health: 100
   damage: 10
-  temperature: 20
   moveSpeed: 10
   movementSound: {fileID: 0}
   entityColor: {r: 1, g: 1, b: 1, a: 1}
+  entityMaterial: {fileID: 0}

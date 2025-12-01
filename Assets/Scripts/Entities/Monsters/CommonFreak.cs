@@ -1,97 +1,68 @@
-using System.Collections;
 using UnityEngine;
 
 public class CommonFreak : Entity
 {
-    private enum FreakState { Wandering, CheckingThreats, AttackingBunker, Dead }
-    private FreakState currentState = FreakState.Wandering;
+    private Vector3 moveDirection;
+    private float directionChangeTimer;
+    private float directionChangeInterval = 2f;
+    private float maxWanderRadius = 120f;
 
-    private float wanderTime = 8f;
-    private float wanderTimer;
-    private float spawnAngle;
-    private Vector2 wanderCenter;
+    protected override bool UsePolarMovement => false;
 
     protected override void InitializeMovement()
     {
-        entityColor = new Color(0.6f, 0.0f, 0.0f);
+        entityColor = Color.magenta;
 
-        spawnAngle = Random.Range(0f, 2f * Mathf.PI);
-        polarPosition = new Vector2(800f, spawnAngle);
-        wanderTimer = wanderTime;
+        // Начальное направление
+        moveDirection = Random.insideUnitCircle.normalized;
+        moveDirection.z = 0;
 
-        // Центр блуждания - случайная точка недалеко от точки появления
-        wanderCenter = new Vector2(600f, spawnAngle);
-
-        moveSpeed = 90f;
-
-        Debug.Log($"Урод обыкновенный создан. Начальный угол: {spawnAngle * Mathf.Rad2Deg:F1}°");
+        // Скорость
+            moveSpeed = 40f;
     }
 
     protected override void Move()
     {
-        if (currentState == FreakState.Dead) return;
+        directionChangeTimer += Time.deltaTime;
 
-        switch (currentState)
+        // Меняем направление через интервал
+        if (directionChangeTimer >= directionChangeInterval)
         {
-            case FreakState.Wandering:
-                Wander();
-                break;
+            moveDirection = Random.insideUnitCircle.normalized;
+            moveDirection.z = 0;
+            directionChangeTimer = 0f;
+        }
 
-            case FreakState.AttackingBunker:
-                AttackBunker();
-                break;
+        // Двигаемся
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+        // Не выходим за рабочий радиус
+        float distanceFromCenter = transform.position.magnitude;
+        if (distanceFromCenter > maxWanderRadius)
+        {
+            // Возвращаемся к центру
+            moveDirection = -transform.position.normalized;
+        }
+
+        // Случайные повороты
+        if (Random.value < 0.01f)
+        {
+            float randomAngle = Random.Range(-45f, 45f);
+            moveDirection = Quaternion.Euler(0, 0, randomAngle) * moveDirection;
         }
     }
 
-    private void Wander()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        wanderTimer -= Time.deltaTime;
-
-        // Блуждание по небольшой области
-        float newRadius = wanderCenter.x + Mathf.Sin(Time.time * 0.5f) * 100f;
-        float newAngle = wanderCenter.y + Mathf.Sin(Time.time * 0.3f) * 0.5f;
-
-        polarPosition = new Vector2(newRadius, newAngle);
-
-        if (wanderTimer <= 0)
+        // При столкновении с игроком или другой сущностью
+        Entity otherEntity = other.GetComponent<Entity>();
+        if (otherEntity != null && otherEntity != this)
         {
-            currentState = FreakState.AttackingBunker;
-            Debug.Log("Урод начинает атаку на бункер");
-        }
+            // Наносим урон
+            otherEntity.TakeDamage(damage);
 
-        // Отладочная информация
-        if (Mathf.FloorToInt(Time.time) % 5 == 0 && Mathf.FloorToInt(Time.time) != Mathf.FloorToInt(Time.time - Time.deltaTime))
-        {
-            Debug.Log($"Урод блуждает: радиус {polarPosition.x:F0}, угол {polarPosition.y * Mathf.Rad2Deg:F1}°");
-        }
-    }
-
-    private void AttackBunker()
-    {
-        Vector2 bunkerPosition = new Vector2(0f, 0f);
-        polarPosition = Vector2.MoveTowards(polarPosition, bunkerPosition, moveSpeed * Time.deltaTime);
-
-        if (Vector2.Distance(polarPosition, bunkerPosition) < 100f)
-        {
-            StartCoroutine(BunkerAttackRoutine());
-        }
-    }
-
-    private IEnumerator BunkerAttackRoutine()
-    {
-        Debug.Log("Урод атакует бункер");
-        yield return new WaitForSeconds(2f);
-        TakeDamage(1000f);
-    }
-
-    public override void TakeDamage(float amount)
-    {
-        base.TakeDamage(amount);
-
-        if (currentHealth <= 0)
-        {
-            currentState = FreakState.Dead;
-            Debug.Log("Урод убит электричеством бункера");
+            // Отскакиваем
+            moveDirection = -moveDirection;
         }
     }
 }

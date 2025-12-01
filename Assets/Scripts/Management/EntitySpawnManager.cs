@@ -25,9 +25,6 @@ public class EntitySpawnManager : MonoBehaviour
     [SerializeField] private int maxMonsters = 2;
     [SerializeField] private int maxMachines = 2;
 
-    [Header("World Settings")]
-    [SerializeField] private float diskRadius = 800f;
-
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogs = true;
 
@@ -41,7 +38,7 @@ public class EntitySpawnManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("EntitySpawnManager запущен. Радиус диска: " + diskRadius);
+        Debug.Log("EntitySpawnManager запущен.");
         LogSpawnerStatus();
     }
 
@@ -86,7 +83,7 @@ public class EntitySpawnManager : MonoBehaviour
             prefab = raccoonPrefab ?? deerPrefab;
         }
 
-        var entity = SpawnEntityAtBorder(prefab, activeNeutrals);
+        var entity = SpawnEntity(prefab, activeNeutrals);
 
         if (enableDebugLogs && entity != null)
         {
@@ -99,7 +96,7 @@ public class EntitySpawnManager : MonoBehaviour
         GameObject prefab = Random.Range(0, 2) == 0 ? mutantWolfPrefab : commonFreakPrefab;
         if (prefab != null)
         {
-            SpawnEntityAtBorder(prefab, activeMonsters);
+            SpawnEntity(prefab, activeMonsters);
         }
     }
 
@@ -108,11 +105,11 @@ public class EntitySpawnManager : MonoBehaviour
         GameObject prefab = Random.Range(0, 2) == 0 ? scannerPrefab : repressorPrefab;
         if (prefab != null)
         {
-            SpawnEntityAtBorder(prefab, activeMachines);
+            SpawnEntity(prefab, activeMachines);
         }
     }
 
-    private Entity SpawnEntityAtBorder(GameObject prefab, List<Entity> entityList)
+    private Entity SpawnEntity(GameObject prefab, List<Entity> entityList)
     {
         if (prefab == null)
         {
@@ -120,24 +117,27 @@ public class EntitySpawnManager : MonoBehaviour
             return null;
         }
 
-        Vector2 spawnPolarPosition = new Vector2(
-            diskRadius,
-            Random.Range(0f, 2f * Mathf.PI)
-        );
+        // Просто спавним в нулевой позиции - Entity сам переместит в правильное место
+        GameObject entityObject = Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
-        Vector3 spawnWorldPosition = CoordinateConverter.PolarToWorld2D(spawnPolarPosition);
-        GameObject entityObject = Instantiate(prefab, spawnWorldPosition, Quaternion.identity);
+        if (entityObject == null)
+        {
+            Debug.LogError("Не удалось создать экземпляр префаба: " + prefab.name);
+            return null;
+        }
+
         Entity entity = entityObject.GetComponent<Entity>();
 
         if (entity != null)
         {
             entityList.Add(entity);
-            Debug.Log($"Создана сущность на радиусе {diskRadius}, позиция: {spawnWorldPosition}");
+            Debug.Log($"Создана сущность: {entity.GetType().Name}");
             return entity;
         }
         else
         {
             Debug.LogError($"Созданный объект {prefab.name} не имеет компонента Entity!");
+            Destroy(entityObject);
             return null;
         }
     }
@@ -152,7 +152,9 @@ public class EntitySpawnManager : MonoBehaviour
     private void LogSpawnerStatus()
     {
         Debug.Log("=== СТАТУС СПАВНЕРА ===");
-        Debug.Log($"Радиус диска: {diskRadius}");
+        Debug.Log($"Нейтралы: {activeNeutrals.Count}/{maxNeutrals}");
+        Debug.Log($"Монстры: {activeMonsters.Count}/{maxMonsters}");
+        Debug.Log($"Машины: {activeMachines.Count}/{maxMachines}");
         Debug.Log("========================");
     }
 
@@ -176,12 +178,12 @@ public class EntitySpawnManager : MonoBehaviour
     {
         Debug.Log("=== ТЕСТОВЫЙ СПАВН ВСЕХ СУЩНОСТЕЙ ===");
 
-        if (raccoonPrefab != null) SpawnEntityAtBorder(raccoonPrefab, activeNeutrals);
-        if (deerPrefab != null) SpawnEntityAtBorder(deerPrefab, activeNeutrals);
-        if (mutantWolfPrefab != null) SpawnEntityAtBorder(mutantWolfPrefab, activeMonsters);
-        if (commonFreakPrefab != null) SpawnEntityAtBorder(commonFreakPrefab, activeMonsters);
-        if (scannerPrefab != null) SpawnEntityAtBorder(scannerPrefab, activeMachines);
-        if (repressorPrefab != null) SpawnEntityAtBorder(repressorPrefab, activeMachines);
+        if (raccoonPrefab != null) SpawnEntity(raccoonPrefab, activeNeutrals);
+        if (deerPrefab != null) SpawnEntity(deerPrefab, activeNeutrals);
+        if (mutantWolfPrefab != null) SpawnEntity(mutantWolfPrefab, activeMonsters);
+        if (commonFreakPrefab != null) SpawnEntity(commonFreakPrefab, activeMonsters);
+        if (scannerPrefab != null) SpawnEntity(scannerPrefab, activeMachines);
+        if (repressorPrefab != null) SpawnEntity(repressorPrefab, activeMachines);
 
         Debug.Log($"Всего сущностей: Нейтралы={activeNeutrals.Count}, Монстры={activeMonsters.Count}, Машины={activeMachines.Count}");
     }
@@ -202,7 +204,7 @@ public class EntitySpawnManager : MonoBehaviour
         GameObject prefab = raccoonPrefab != null ? raccoonPrefab : deerPrefab;
         if (prefab != null)
         {
-            SpawnEntityAtBorder(prefab, activeNeutrals);
+            SpawnEntity(prefab, activeNeutrals);
             Debug.Log($"Создан тестовый нейтрал: {prefab.name}");
         }
         else

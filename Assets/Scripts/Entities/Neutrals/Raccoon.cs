@@ -2,107 +2,111 @@ using UnityEngine;
 
 public class Raccoon : Entity
 {
-    private enum Direction { Left, Right }
-    private Direction moveDirection;
-    private Vector2 startPolarPosition;
-    private Vector2 targetPolarPosition;
-    private bool hasReachedTarget = false;
-    private float journeyTime = 15f;
-    private float startTime;
+    private enum RaccoonState { MovingToCenter, Crossing, MovingToExit, Completed }
+    private RaccoonState currentState = RaccoonState.MovingToCenter;
+
+    private Vector3 startPosition;
+    private Vector3 exitPosition;
+    private Vector3 centerPosition;
+    private float journeyTime;
+    private float phaseDuration = 3f;
+
+    protected override bool UsePolarMovement => false;
 
     protected override void InitializeMovement()
     {
-        entityColor = new Color(0.5f, 0.5f, 0.5f);
+        entityColor = new Color(0.4f, 0.4f, 0.4f);
 
-        // Появление на границе
-        float spawnAngle = Random.Range(0f, 2f * Mathf.PI);
-        startPolarPosition = new Vector2(800f, spawnAngle);
-        polarPosition = startPolarPosition;
+        // Стартовая позиция
+        startPosition = transform.position;
 
-        // Выбор направления движения
-        moveDirection = Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
+        // Противоположная точка выхода
+        float startAngle = Mathf.Atan2(startPosition.y, startPosition.x);
+        float exitAngle = (startAngle + Mathf.PI) % (2f * Mathf.PI);
+        exitPosition = CoordinateConverter.PolarToWorld2D(new Vector2(Entity.SPAWN_RADIUS, exitAngle));
 
-        // Целевая точка - противоположная сторона диска
-        float targetAngle;
-        if (moveDirection == Direction.Left)
-        {
-            targetAngle = (spawnAngle - Mathf.PI) % (2f * Mathf.PI);
-        }
-        else
-        {
-            targetAngle = (spawnAngle + Mathf.PI) % (2f * Mathf.PI);
-        }
+        // Центр
+        centerPosition = Vector3.zero;
 
-        // Целевая точка на противоположной стороне
-        targetPolarPosition = new Vector2(800f, targetAngle);
+        // Скорость
+    
+            moveSpeed = 60f;
 
-        startTime = Time.time;
-        moveSpeed = 80f;
+        journeyTime = 0f;
+        currentState = RaccoonState.MovingToCenter;
 
-        Debug.Log($"Енот: появился под углом {spawnAngle * Mathf.Rad2Deg:F1}°, цель: {targetAngle * Mathf.Rad2Deg:F1}°");
+        Debug.Log($"Енот: старт {startPosition}, выход {exitPosition}");
     }
 
     protected override void Move()
     {
-        if (hasReachedTarget) return;
+        if (currentState == RaccoonState.Completed)
+            return;
 
-        float progress = (Time.time - startTime) / journeyTime;
+        journeyTime += Time.deltaTime;
+        float progress = journeyTime / phaseDuration;
+
+        switch (currentState)
+        {
+            case RaccoonState.MovingToCenter:
+                MoveToCenter(progress);
+                break;
+
+            case RaccoonState.Crossing:
+                CrossCenter(progress);
+                break;
+
+            case RaccoonState.MovingToExit:
+                MoveToExit(progress);
+                break;
+        }
+    }
+
+    private void MoveToCenter(float progress)
+    {
+        transform.position = Vector3.Lerp(startPosition, centerPosition, progress);
 
         if (progress >= 1f)
         {
-            hasReachedTarget = true;
-            Debug.Log("Енот достиг цели и исчезает");
+            currentState = RaccoonState.Crossing;
+            journeyTime = 0f;
+            Debug.Log("Енот достиг центра");
+        }
+    }
+
+    private void CrossCenter(float progress)
+    {
+        // Вращаемся в центре
+        float radius = 15f;
+        float angle = progress * 2f * Mathf.PI;
+
+        Vector3 offset = new Vector3(
+            Mathf.Cos(angle) * radius,
+            Mathf.Sin(angle) * radius,
+            0
+        );
+
+        transform.position = centerPosition + offset;
+        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+
+        if (progress >= 1f)
+        {
+            currentState = RaccoonState.MovingToExit;
+            journeyTime = 0f;
+            Debug.Log("Енот закончил осмотр центра");
+        }
+    }
+
+    private void MoveToExit(float progress)
+    {
+        transform.position = Vector3.Lerp(centerPosition, exitPosition, progress);
+        transform.rotation = Quaternion.identity;
+
+        if (progress >= 1f)
+        {
+            currentState = RaccoonState.Completed;
+            Debug.Log("Енот достиг выхода и исчезает");
             DestroyEntity();
-            return;
-        }
-
-        // Сложное движение через весь диск
-        // Сначала движемся к центру, затем к целевой точке
-
-        // Изменяем радиус - сначала уменьшаем, потом увеличиваем
-        float radiusProgress;
-        if (progress < 0.3f)
-        {
-            // Фаза 1: движение от границы к центру
-            radiusProgress = progress / 0.3f;
-            float currentRadius = Mathf.Lerp(800f, 200f, radiusProgress);
-
-            // Плавное изменение угла
-            float currentAngle = Mathf.LerpAngle(startPolarPosition.y, startPolarPosition.y + (moveDirection == Direction.Left ? -0.5f : 0.5f), radiusProgress);
-
-            polarPosition = new Vector2(currentRadius, currentAngle);
-        }
-        else if (progress < 0.7f)
-        {
-            // Фаза 2: движение через центр с изменением направления
-            radiusProgress = (progress - 0.3f) / 0.4f;
-            float currentRadius = Mathf.Lerp(200f, 200f, radiusProgress); // Остаемся вблизи центра
-
-            // Значительное изменение угла
-            float angleProgress = (progress - 0.3f) / 0.4f;
-            float startMidAngle = startPolarPosition.y + (moveDirection == Direction.Left ? -0.5f : 0.5f);
-            float endMidAngle = targetPolarPosition.y + (moveDirection == Direction.Left ? 0.5f : -0.5f);
-            float currentAngle = Mathf.LerpAngle(startMidAngle, endMidAngle, angleProgress);
-
-            polarPosition = new Vector2(currentRadius, currentAngle);
-        }
-        else
-        {
-            // Фаза 3: движение от центра к границе
-            radiusProgress = (progress - 0.7f) / 0.3f;
-            float currentRadius = Mathf.Lerp(200f, 800f, radiusProgress);
-
-            // Плавное движение к целевому углу
-            float startFinalAngle = targetPolarPosition.y + (moveDirection == Direction.Left ? 0.5f : -0.5f);
-            float currentAngle = Mathf.LerpAngle(startFinalAngle, targetPolarPosition.y, radiusProgress);
-
-            polarPosition = new Vector2(currentRadius, currentAngle);
-        }
-
-        // Отладочная информация
-        if (Mathf.FloorToInt(Time.time) % 5 == 0 && Mathf.FloorToInt(Time.time) != Mathf.FloorToInt(Time.time - Time.deltaTime))
-        {
-            Debug.Log($"Енот: прогресс {progress:P0}, радиус {polarPosition.x:F0}, угол {polarPosition.y * Mathf.Rad2Deg:F1}°");
         }
     }
 }

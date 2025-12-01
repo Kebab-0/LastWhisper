@@ -1,58 +1,57 @@
 using UnityEngine;
 
-public class DiskVisualizer : MonoBehaviour
+public class SectorVisualizer : MonoBehaviour
 {
-    [Header("Disk Settings")]
-    public float diskRadius = 800f;
-    public int circleCount = 5;
-    public float circleSpacing = 100f;
+    [Header("Радиусы")]
+    [SerializeField] private bool showWorkRadius = true;
+    [SerializeField] private bool showSpawnRadius = true;
+    [SerializeField] private bool showDespawnRadius = true;
+    [SerializeField] private bool showSectors = true;
 
-    private void OnDrawGizmos()
-    {
-        // Внешняя граница
-        Gizmos.color = Color.red;
-        DrawCircle(diskRadius);
+    [Header("Цвета")]
+    [SerializeField] private Color workRadiusColor = Color.green;
+    [SerializeField] private Color spawnRadiusColor = Color.blue;
+    [SerializeField] private Color despawnRadiusColor = Color.red;
+    [SerializeField] private Color sectorColor = Color.yellow;
 
-        // Внутренние окружности
-        Gizmos.color = Color.blue;
-        for (int i = 1; i <= circleCount; i++)
-        {
-            DrawCircle(i * circleSpacing);
-        }
-
-        // Сектора
-        Gizmos.color = Color.green;
-        DrawSectors();
-    }
-
-    private void DrawCircle(float radius)
+    void OnDrawGizmos()
     {
         Vector3 center = Vector3.zero;
-        int segments = 36;
-        float angleStep = 360f / segments;
 
-        for (int i = 0; i < segments; i++)
+        if (showWorkRadius)
         {
-            float angle1 = i * angleStep * Mathf.Deg2Rad;
-            float angle2 = (i + 1) * angleStep * Mathf.Deg2Rad;
-
-            Vector3 point1 = center + new Vector3(Mathf.Cos(angle1), Mathf.Sin(angle1), 0) * radius;
-            Vector3 point2 = center + new Vector3(Mathf.Cos(angle2), Mathf.Sin(angle2), 0) * radius;
-
-            Gizmos.DrawLine(point1, point2);
+            Gizmos.color = workRadiusColor;
+            Gizmos.DrawWireSphere(center, Entity.WORK_RADIUS);
         }
-    }
 
-    private void DrawSectors()
-    {
-        int sectors = 8;
-        float angleStep = 360f / sectors;
-
-        for (int i = 0; i < sectors; i++)
+        if (showSpawnRadius)
         {
-            float angle = i * angleStep * Mathf.Deg2Rad;
-            Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
-            Gizmos.DrawLine(Vector3.zero, direction * diskRadius);
+            Gizmos.color = spawnRadiusColor;
+            Gizmos.DrawWireSphere(center, Entity.SPAWN_RADIUS);
+        }
+
+        if (showDespawnRadius)
+        {
+            Gizmos.color = despawnRadiusColor;
+            Gizmos.DrawWireSphere(center, Entity.DESPAWN_RADIUS);
+        }
+
+        if (showSectors)
+        {
+            Gizmos.color = sectorColor;
+            int sectors = 8;
+            float angleStep = (2f * Mathf.PI) / sectors;
+
+            for (int i = 0; i < sectors; i++)
+            {
+                float angle = i * angleStep;
+                Vector3 point = new Vector3(
+                    Mathf.Cos(angle) * Entity.DESPAWN_RADIUS,
+                    Mathf.Sin(angle) * Entity.DESPAWN_RADIUS,
+                    0
+                );
+                Gizmos.DrawLine(center, point);
+            }
         }
     }
 }

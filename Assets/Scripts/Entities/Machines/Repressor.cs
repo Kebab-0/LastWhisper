@@ -1,91 +1,59 @@
 using UnityEngine;
-using System.Collections;
 
 public class Repressor : Entity
 {
-    private enum RepressorState { Moving, Attacking, Leaving }
-    private RepressorState currentState = RepressorState.Moving;
-
     private SectorManager sectorManager;
-    private float targetAngle;
-    private float attackRadius = 300f;
+    private Scanner targetScanner;
+    private Vector3 patrolPoint;
+    private float patrolTimer;
+    private float patrolChangeTime = 4f;
+
+    protected override bool UsePolarMovement => false;
 
     protected override void InitializeMovement()
     {
-        entityColor = new Color(0.5f, 0.0f, 0.5f);
-
+        entityColor = Color.green;
         sectorManager = SectorManager.Instance;
-
-        Scanner lastScanner = sectorManager?.GetLastDestroyedScanner();
-        if (lastScanner != null)
-        {
-            targetAngle = lastScanner.PolarPosition.y;
-        }
-        else
-        {
-            targetAngle = Random.Range(0f, 2f * Mathf.PI);
-        }
-
-        polarPosition = new Vector2(800f, targetAngle);
-        currentState = RepressorState.Moving;
-
-        moveSpeed = 150f;
-
-        Debug.Log($"Репрессор создан. Целевой угол: {targetAngle * Mathf.Rad2Deg:F1}°");
+        patrolPoint = GetRandomPatrolPoint();
     }
 
     protected override void Move()
     {
-        switch (currentState)
+        // 1. Проверяем последний уничтоженный сканер
+        if (sectorManager != null)
         {
-            case RepressorState.Moving:
-                MoveToSector();
-                break;
+            targetScanner = sectorManager.GetLastDestroyedScanner();
 
-            case RepressorState.Attacking:
-                Attack();
-                break;
+            if (targetScanner != null)
+            {
+                // Едем к месту последнего уничтоженного сканера
+                MoveTowardsWorld(targetScanner.transform.position);
+                return;
+            }
+        }
 
-            case RepressorState.Leaving:
-                Leave();
-                break;
+        // 2. Если нет целей - патрулируем
+        patrolTimer += Time.deltaTime;
+
+        MoveTowardsWorld(patrolPoint);
+
+        if (patrolTimer >= patrolChangeTime || Vector3.Distance(transform.position, patrolPoint) < 5f)
+        {
+            patrolPoint = GetRandomPatrolPoint();
+            patrolTimer = 0f;
         }
     }
 
-    private void MoveToSector()
+    private Vector3 GetRandomPatrolPoint()
     {
-        Vector2 targetPosition = new Vector2(attackRadius, targetAngle);
-        polarPosition = Vector2.MoveTowards(polarPosition, targetPosition, moveSpeed * Time.deltaTime);
-
-        if (Vector2.Distance(polarPosition, targetPosition) < 10f)
-        {
-            currentState = RepressorState.Attacking;
-            Debug.Log("Репрессор начал атаку");
-        }
+        // Случайная точка в пределах рабочей зоны
+        Vector2 randomPoint = Random.insideUnitCircle * WORK_RADIUS;
+        return new Vector3(randomPoint.x, randomPoint.y, 0);
     }
 
-    private void Attack()
+    void OnDrawGizmosSelected()
     {
-        StartCoroutine(AttackRoutine());
-        currentState = RepressorState.Leaving;
-    }
-
-    private IEnumerator AttackRoutine()
-    {
-        Debug.Log("Репрессор атакует врагов в секторе");
-        yield return new WaitForSeconds(2f);
-        Debug.Log("Репрессор завершил атаку");
-    }
-
-    private void Leave()
-    {
-        Vector2 exitPosition = new Vector2(800f, targetAngle);
-        polarPosition = Vector2.MoveTowards(polarPosition, exitPosition, moveSpeed * Time.deltaTime);
-
-        if (Vector2.Distance(polarPosition, exitPosition) < 10f)
-        {
-            Debug.Log("Репрессор покинул диск");
-            DestroyEntity();
-        }
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, 20f);
     }
 }

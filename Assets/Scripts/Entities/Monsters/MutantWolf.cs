@@ -3,60 +3,88 @@ using UnityEngine;
 
 public class MutantWolf : Entity
 {
-    private enum WolfState { SearchingFirstSector, MovingToFirstSector, SearchingSecondSector, MovingToSecondSector, ChasingNeutral, Killing, MovingToBunker, AttackingBunker, Dead }
-    private WolfState currentState = WolfState.SearchingFirstSector;
+    private enum WolfState
+    {
+        MovingToFirstSector,
+        SearchingFirstSector,
+        MovingToSecondSector,
+        SearchingSecondSector,
+        ChasingNeutral,
+        Killing,
+        MovingToBunker,
+        AttackingBunker,
+        Dead
+    }
 
+    private WolfState currentState = WolfState.MovingToFirstSector;
     private SectorManager sectorManager;
     private Entity currentTarget;
-    private Vector2 firstSectorCenter;
-    private Vector2 secondSectorCenter;
-    private Vector2 currentTargetPosition;
-    private bool hasFoundTarget = false;
-    private float killRange = 50f;
-    private float searchRadius = 200f;
+    private Vector3 firstSectorPoint;
+    private Vector3 secondSectorPoint;
+    private Vector3 spawnPosition;
+    private float killRange = 10f;
+    private float searchRadius = 100f;
+    private float stateTimer = 0f;
+
+    // Используем мировые координаты
+    protected override bool UsePolarMovement => false;
 
     protected override void InitializeMovement()
     {
         entityColor = Color.red;
 
+        // Получаем спавн позицию
+        spawnPosition = transform.position;
+
+        // Получаем SectorManager
         sectorManager = SectorManager.Instance;
+        if (sectorManager == null)
+        {
+            Debug.LogError("SectorManager не найден!");
+            return;
+        }
 
-        // Появление на случайной граничной точке
-        float spawnAngle = Random.Range(0f, 2f * Mathf.PI);
-        polarPosition = new Vector2(800f, spawnAngle);
+        // Первый сектор - ближе к месту спавна
+        Vector2 firstSectorPolar = CoordinateConverter.WorldToPolar2D(spawnPosition);
+        firstSectorPolar.x = Mathf.Min(firstSectorPolar.x * 0.7f, Entity.WORK_RADIUS * 0.7f);
+        firstSectorPoint = CoordinateConverter.PolarToWorld2D(firstSectorPolar);
 
-        // Определяем центры секторов для поиска
-        firstSectorCenter = new Vector2(600f, spawnAngle); // Первый сектор - ближе к точке появления
-        secondSectorCenter = new Vector2(300f, (spawnAngle + Mathf.PI) % (2f * Mathf.PI)); // Второй сектор - противоположная сторона
+        // Второй сектор - противоположная сторона
+        Vector2 secondSectorPolar = firstSectorPolar;
+        secondSectorPolar.y = (secondSectorPolar.y + Mathf.PI) % (2f * Mathf.PI);
+        secondSectorPolar.x = Entity.WORK_RADIUS * 0.4f;
+        secondSectorPoint = CoordinateConverter.PolarToWorld2D(secondSectorPolar);
+
+        // Скорость
+        if (moveSpeed <= 0.1f)
+            moveSpeed = 80f;
 
         currentState = WolfState.MovingToFirstSector;
-        currentTargetPosition = firstSectorCenter;
+        stateTimer = 0f;
 
-        moveSpeed = 80f; // Нормальная скорость
-
-        Debug.Log($"Волк создан. Движется к первому сектору: радиус {firstSectorCenter.x}, угол {firstSectorCenter.y * Mathf.Rad2Deg:F1}°");
+        Debug.Log($"Волк создан. Спавн: {spawnPosition}, Первый сектор: {firstSectorPoint}");
     }
 
     protected override void Move()
     {
-        if (currentState == WolfState.Dead) return;
+        stateTimer += Time.deltaTime;
 
         switch (currentState)
         {
             case WolfState.MovingToFirstSector:
-                MoveToPosition(firstSectorCenter, WolfState.SearchingFirstSector);
+                MoveToFirstSector();
                 break;
 
             case WolfState.SearchingFirstSector:
-                SearchForNeutral(firstSectorCenter, WolfState.MovingToSecondSector);
+                SearchFirstSector();
                 break;
 
             case WolfState.MovingToSecondSector:
-                MoveToPosition(secondSectorCenter, WolfState.SearchingSecondSector);
+                MoveToSecondSector();
                 break;
 
             case WolfState.SearchingSecondSector:
-                SearchForNeutral(secondSectorCenter, WolfState.MovingToBunker);
+                SearchSecondSector();
                 break;
 
             case WolfState.ChasingNeutral:
@@ -68,95 +96,96 @@ public class MutantWolf : Entity
                 break;
 
             case WolfState.AttackingBunker:
-                // Атака происходит в корутине
+                AttackBunker();
                 break;
 
             case WolfState.Killing:
-                // Убийство происходит в корутине
+                // Ждем завершения убийства
+                break;
+
+            case WolfState.Dead:
+                // Уже мертв
                 break;
         }
     }
 
-    private void MoveToPosition(Vector2 targetPosition, WolfState nextState)
+    private void MoveToFirstSector()
     {
-        // Плавное движение к целевой позиции
-        polarPosition = Vector2.MoveTowards(polarPosition, targetPosition, moveSpeed * Time.deltaTime);
+        MoveTowardsWorld(firstSectorPoint);
 
-        // Проверяем достижение цели
-        if (Vector2.Distance(polarPosition, targetPosition) < 10f)
+        if (Vector3.Distance(transform.position, firstSectorPoint) < 5f || stateTimer > 15f)
         {
-            currentState = nextState;
-            Debug.Log($"Волк достиг позиции: радиус {targetPosition.x}, угол {targetPosition.y * Mathf.Rad2Deg:F1}°");
+            currentState = WolfState.SearchingFirstSector;
+            stateTimer = 0f;
+            Debug.Log("Волк достиг первого сектора");
         }
     }
 
-    private void SearchForNeutral(Vector2 searchCenter, WolfState nextStateIfNoTarget)
+    private void SearchFirstSector()
     {
-        // Ищем нейтралов в текущем секторе
-        var neutrals = sectorManager.GetNeutralsInSector(searchCenter.y, searchCenter.x);
+        // Ищем нейтралов в секторе
+        float angle = Mathf.Atan2(firstSectorPoint.y, firstSectorPoint.x);
+        var neutrals = sectorManager.GetNeutralsInSector(angle, searchRadius);
 
-        if (neutrals.Count > 0 && !hasFoundTarget)
+        if (neutrals.Count > 0)
         {
-            // Нашли нейтрала - начинаем преследование
             currentTarget = neutrals[0];
-            hasFoundTarget = true;
             currentState = WolfState.ChasingNeutral;
-            Debug.Log($"Волк нашел нейтрала: {currentTarget.GetType().Name}");
+            Debug.Log($"Волк обнаружил цель: {currentTarget.name}");
         }
-        else
+        else if (stateTimer > 5f)
         {
-            // Не нашли нейтрала - переходим к следующему состоянию
-            currentState = nextStateIfNoTarget;
-
-            if (nextStateIfNoTarget == WolfState.MovingToSecondSector)
-            {
-                Debug.Log("Волк не нашел нейтралов в первом секторе, движется ко второму");
-                currentTargetPosition = secondSectorCenter;
-            }
-            else if (nextStateIfNoTarget == WolfState.MovingToBunker)
-            {
-                Debug.Log("Волк не нашел нейтралов ни в одном секторе, атакует бункер");
-            }
+            currentState = WolfState.MovingToSecondSector;
+            stateTimer = 0f;
+            Debug.Log("В первом секторе нет целей, двигаюсь ко второму");
         }
+    }
 
-        // Небольшое движение на месте во время поиска
-        float wanderRadius = 20f;
-        polarPosition = new Vector2(
-            searchCenter.x + Mathf.Sin(Time.time * 2f) * wanderRadius,
-            searchCenter.y + Mathf.Cos(Time.time * 2f) * wanderRadius * 0.01f
-        );
+    private void MoveToSecondSector()
+    {
+        MoveTowardsWorld(secondSectorPoint);
+
+        if (Vector3.Distance(transform.position, secondSectorPoint) < 5f || stateTimer > 15f)
+        {
+            currentState = WolfState.SearchingSecondSector;
+            stateTimer = 0f;
+            Debug.Log("Волк достиг второго сектора");
+        }
+    }
+
+    private void SearchSecondSector()
+    {
+        // Ищем нейтралов в секторе
+        float angle = Mathf.Atan2(secondSectorPoint.y, secondSectorPoint.x);
+        var neutrals = sectorManager.GetNeutralsInSector(angle, searchRadius);
+
+        if (neutrals.Count > 0)
+        {
+            currentTarget = neutrals[0];
+            currentState = WolfState.ChasingNeutral;
+            Debug.Log($"Волк обнаружил цель во втором секторе: {currentTarget.name}");
+        }
+        else if (stateTimer > 5f)
+        {
+            currentState = WolfState.MovingToBunker;
+            stateTimer = 0f;
+            Debug.Log("Целей нет, двигаюсь к бункеру");
+        }
     }
 
     private void ChaseNeutral()
     {
         if (currentTarget == null)
         {
-            // Цель исчезла - возвращаемся к поиску
-            hasFoundTarget = false;
-            currentState = WolfState.SearchingFirstSector;
+            currentState = WolfState.MovingToSecondSector;
             return;
         }
 
-        // Двигаемся к позиции нейтрала
-        Vector2 targetPosition = currentTarget.PolarPosition;
-        polarPosition = Vector2.MoveTowards(polarPosition, targetPosition, moveSpeed * Time.deltaTime);
+        MoveTowardsWorld(currentTarget.transform.position);
 
-        // Проверяем достижение цели
-        if (Vector2.Distance(polarPosition, targetPosition) < killRange)
+        if (Vector3.Distance(transform.position, currentTarget.transform.position) < killRange)
         {
             StartCoroutine(KillNeutral());
-        }
-    }
-
-    private void MoveToBunker()
-    {
-        // Двигаемся к бункеру (центру диска)
-        Vector2 bunkerPosition = new Vector2(0f, 0f);
-        polarPosition = Vector2.MoveTowards(polarPosition, bunkerPosition, moveSpeed * Time.deltaTime);
-
-        if (Vector2.Distance(polarPosition, bunkerPosition) < 100f)
-        {
-            StartCoroutine(AttackBunker());
         }
     }
 
@@ -166,33 +195,38 @@ public class MutantWolf : Entity
 
         if (currentTarget != null)
         {
-            Debug.Log($"Волк убивает {currentTarget.GetType().Name}");
-            currentTarget.TakeDamage(1000f); // Мгновенная смерть
-
-            // Ждем некоторое время после убийства
-            yield return new WaitForSeconds(2f);
-
-            Debug.Log("Волк удаляется после убийства");
-            DestroyEntity();
+            Debug.Log($"Волк убивает {currentTarget.name}");
+            currentTarget.TakeDamage(1000f);
         }
-        else
+
+        yield return new WaitForSeconds(1f);
+
+        Debug.Log("Волк исчезает после убийства");
+        DestroyEntity();
+    }
+
+    private void MoveToBunker()
+    {
+        MoveTowardsWorld(Vector3.zero);
+
+        if (Vector3.Distance(transform.position, Vector3.zero) < 20f || stateTimer > 20f)
         {
-            // Если цель исчезла, просто удаляемся
-            DestroyEntity();
+            currentState = WolfState.AttackingBunker;
+            stateTimer = 0f;
+            Debug.Log("Волк достиг бункера");
         }
     }
 
-    private IEnumerator AttackBunker()
+    private void AttackBunker()
     {
-        currentState = WolfState.AttackingBunker;
-        Debug.Log("Волк атакует бункер");
+        // Вращаемся вокруг бункера
+        transform.RotateAround(Vector3.zero, Vector3.forward, 90f * Time.deltaTime);
 
-        // Атака бункера в течение 2 секунд
-        yield return new WaitForSeconds(2f);
-
-        // Бункер поражает волка электричеством
-        Debug.Log("Бункер поражает волка электричеством");
-        TakeDamage(1000f);
+        if (stateTimer > 3f)
+        {
+            Debug.Log("Волк уничтожен электричеством бункера");
+            TakeDamage(1000f);
+        }
     }
 
     public override void TakeDamage(float amount)
@@ -202,7 +236,7 @@ public class MutantWolf : Entity
         if (currentHealth <= 0)
         {
             currentState = WolfState.Dead;
-            Debug.Log("Волк убит электричеством бункера");
+            Debug.Log("Волк мертв");
         }
     }
 }
