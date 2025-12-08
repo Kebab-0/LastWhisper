@@ -1,245 +1,151 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Sensors : MonoBehaviour
 {
-    public Transform Center;
-    public Transform[] sensors1;
-    public Transform[] sensors2;
-    public Transform[] sensors3;
-    public Transform[] sensors4;
-    public Transform[] sensors5;
-    public float detectionDistance1;
-    public float detectionDistance2;
-    public float detectionDistance3;
-    public float detectionDistance4;
-    public float detectionDistance5;
-    public Color activeColor;
-    public Color passiveColor;
-    int chooseIndex = -2;
-    int chooseDistance = -2;
-    int sensorIndex = -1;
-    int nearIndex = -1;
-    public Detector detector;
-    private SpriteRenderer[] sensorRenderers1;
-    private SpriteRenderer[] sensorRenderers2;
-    private SpriteRenderer[] sensorRenderers3;
-    private SpriteRenderer[] sensorRenderers4;
-    private SpriteRenderer[] sensorRenderers5;
+    public Color activeColor = Color.red;      // Цвет активного сенсора
+    public Color passiveColor = Color.gray;    // Цвет пассивного сенсора
+    public Detector detector;                  // Ссылка на Detector (UI)
 
+    public float[] detectionDistances = new float[5] { 2f, 4f, 6f, 8f, 10f }; // Радиусы зон
+
+    private Dictionary<int, Transform[]> sensors = new Dictionary<int, Transform[]>();
+    private Dictionary<int, SpriteRenderer[]> renderers = new Dictionary<int, SpriteRenderer[]>();
+
+    private int prevRadius = -1;   // Последний активный радиус
+    private int prevIndex = -1;    // Последний активный сенсор
 
     void Start()
     {
-        sensorRenderers1 = new SpriteRenderer[sensors1.Length];
-        sensorRenderers2 = new SpriteRenderer[sensors2.Length];
-        sensorRenderers3 = new SpriteRenderer[sensors3.Length];
-        sensorRenderers4 = new SpriteRenderer[sensors4.Length];
-        sensorRenderers5 = new SpriteRenderer[sensors5.Length];
-        for (int i = 0; i < sensors1.Length; i++)
-        {
-            sensorRenderers1[i] = sensors1[i].GetComponent<SpriteRenderer>();
-            
-        }
-        for (int i = 0; i < sensors2.Length; i++)
-        {
-            sensorRenderers2[i] = sensors2[i].GetComponent<SpriteRenderer>();
-
-        }
-        for (int i = 0; i < sensors3.Length; i++)
-        {
-            sensorRenderers3[i] = sensors3[i].GetComponent<SpriteRenderer>();
-
-        }
-        for (int i = 0; i < sensors4.Length; i++)
-        {
-            sensorRenderers4[i] = sensors4[i].GetComponent<SpriteRenderer>();
-
-        }
-        for (int i = 0; i < sensors5.Length; i++)
-        {
-            sensorRenderers5[i] = sensors5[i].GetComponent<SpriteRenderer>();
-
-        }
+        AutoFindDetector();
+        AutoDetectSensors();
     }
 
-    void Repaint(int rad, int ind)
+    // ------------------------------
+    // Авто-находим Detector
+    // ------------------------------
+    void AutoFindDetector()
     {
-        switch (rad)
+        if (detector != null) return;
+
+        detector = FindObjectOfType<Detector>();
+        if (detector == null)
         {
-            case 1:
-                sensorRenderers1[ind].color = passiveColor;
-                break;
-            case 2:
-                sensorRenderers2[ind].color = passiveColor;
-                break;
-            case 3:
-                sensorRenderers3[ind].color = passiveColor;
-                break;
-            case 4:
-                sensorRenderers4[ind].color = passiveColor;
-                break;
-            case 5:
-                sensorRenderers5[ind].color = passiveColor;
-                break;
+            Debug.LogWarning("Sensors: Detector не найден! Присвойте вручную в инспекторе.");
         }
     }
 
+    // ------------------------------
+    // Авто-находим сенсоры по тегу "Sens"
+    // ------------------------------
+    void AutoDetectSensors()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Sens"); // все сенсоры должны иметь тег "Sens"
+        Dictionary<int, List<Transform>> temp = new Dictionary<int, List<Transform>>();
+
+        int maxRadius = detectionDistances.Length;
+        for (int r = 1; r <= maxRadius; r++)
+            temp[r] = new List<Transform>();
+
+        foreach (var obj in objs)
+        {
+            string n = obj.name;
+            if (!n.StartsWith("Sensor") || n.Length < 8) continue;
+
+            if (!int.TryParse(n.Substring(6, 1), out int radius)) continue;
+            if (radius < 1 || radius > maxRadius) continue;
+
+            temp[radius].Add(obj.transform);
+        }
+
+        for (int r = 1; r <= maxRadius; r++)
+        {
+            temp[r].Sort((a, b) => a.name.CompareTo(b.name));
+            sensors[r] = temp[r].ToArray();
+
+            SpriteRenderer[] rs = new SpriteRenderer[sensors[r].Length];
+            for (int i = 0; i < sensors[r].Length; i++)
+            {
+                rs[i] = sensors[r][i] != null ? sensors[r][i].GetComponent<SpriteRenderer>() : null;
+                if (rs[i] != null)
+                    rs[i].color = passiveColor;
+            }
+            renderers[r] = rs;
+        }
+    }
+
+    // ------------------------------
+    // Основной Update
+    // ------------------------------
     void Update()
     {
-        if (nearIndex != -1)
-        {
-            Repaint(sensorIndex, nearIndex);
-        }
-        
+        int nearestRadius = -1;
+        int nearestIndex = -1;
+        float minDist = float.MaxValue;
 
-        float distanceCenter = Vector3.Distance(transform.position, Center.position);
-        if (distanceCenter <= detectionDistance1)
+        int maxRadius = Mathf.Min(5, detectionDistances.Length);
+
+        // Обход радиусов
+        for (int r = 1; r <= maxRadius; r++)
         {
-            
-            float minimal = 999999999;
-            int nearestIndex = -1;
-            
-            for (int i = 0; i < sensors1.Length; i++)
+            if (!sensors.ContainsKey(r) || sensors[r] == null || sensors[r].Length == 0) continue;
+
+            Transform[] arr = sensors[r];
+            for (int i = 0; i < arr.Length; i++)
             {
-                float dist = Vector3.Distance(sensors1[i].position, transform.position);
-                if (dist < minimal)
+                if (arr[i] == null) continue;
+
+                float d = Vector3.Distance(transform.position, arr[i].position);
+
+                // Проверяем индекс массива detectionDistances
+                if (r - 1 >= 0 && r - 1 < detectionDistances.Length && d <= detectionDistances[r - 1] && d < minDist)
                 {
-                    minimal = dist;
+                    minDist = d;
+                    nearestRadius = r;
                     nearestIndex = i;
-                    nearIndex = i;
-                    
-                }
-            }
-
-            if (nearestIndex != -1 && sensorRenderers1[nearestIndex] != null)
-            {
-                sensorIndex = 1;
-                sensorRenderers1[nearestIndex].color = activeColor;
-                
-
-
-                if (chooseIndex != nearestIndex || chooseDistance != 1)
-                {
-                    chooseIndex = nearestIndex;
-                    chooseDistance = 1;
-                    detector.Detection();
                 }
             }
         }
-        if (distanceCenter <= detectionDistance2 && distanceCenter > detectionDistance1)
+
+        // Деактивируем предыдущий сенсор
+        if (prevRadius != -1 && prevIndex != -1 &&
+            renderers.ContainsKey(prevRadius) &&
+            renderers[prevRadius] != null &&
+            prevIndex < renderers[prevRadius].Length &&
+            renderers[prevRadius][prevIndex] != null)
         {
-
-            float minimal = 999999999;
-            int nearestIndex = -1;
-            for (int i = 0; i < sensors2.Length; i++)
-            {
-                float dist = Vector3.Distance(sensors2[i].position, transform.position);
-                if (dist < minimal)
-                {
-                    minimal = dist;
-                    nearestIndex = i;
-                    nearIndex = i;
-                }
-            }
-
-            if (nearestIndex != -1 && sensorRenderers2[nearestIndex] != null)
-            {
-                sensorIndex = 2;
-                sensorRenderers2[nearestIndex].color = activeColor;
-                
-                if (chooseIndex != nearestIndex || chooseDistance != 2)
-                {
-                    chooseIndex = nearestIndex;
-                    chooseDistance = 2;
-                    detector.Detection();
-                }
-            }
+            renderers[prevRadius][prevIndex].color = passiveColor;
         }
-        if (distanceCenter <= detectionDistance3 && distanceCenter > detectionDistance2)
+
+        // Активируем текущий сенсор
+        if (nearestRadius != -1 && nearestIndex != -1 &&
+            sensors.ContainsKey(nearestRadius) &&
+            renderers.ContainsKey(nearestRadius) &&
+            sensors[nearestRadius] != null &&
+            renderers[nearestRadius] != null &&
+            nearestIndex < sensors[nearestRadius].Length &&
+            nearestIndex < renderers[nearestRadius].Length &&
+            sensors[nearestRadius][nearestIndex] != null &&
+            renderers[nearestRadius][nearestIndex] != null)
         {
+            renderers[nearestRadius][nearestIndex].color = activeColor;
 
-            float minimal = 999999999;
-            int nearestIndex = -1;
-            for (int i = 0; i < sensors3.Length; i++)
+            // Детектор срабатывает только при смене сенсора
+            bool isNewSensor = (nearestRadius != prevRadius || nearestIndex != prevIndex);
+
+            prevRadius = nearestRadius;
+            prevIndex = nearestIndex;
+
+            if (detector != null && isNewSensor)
             {
-                float dist = Vector3.Distance(sensors3[i].position, transform.position);
-                if (dist < minimal)
-                {
-                    minimal = dist;
-                    nearestIndex = i;
-                    nearIndex = i;
-                }
+                detector.Detection(sensors[nearestRadius][nearestIndex].gameObject);
             }
 
-            if (nearestIndex != -1 && sensorRenderers3[nearestIndex] != null)
-            {
-                sensorIndex = 3;
-                sensorRenderers3[nearestIndex].color = activeColor;
-                
-                if (chooseIndex != nearestIndex || chooseDistance != 3)
-                {
-                    chooseIndex = nearestIndex;
-                    chooseDistance = 3;
-                    detector.Detection();
-                }
-            }
         }
-        if (distanceCenter <= detectionDistance4 && distanceCenter > detectionDistance3)
+        else
         {
-
-            float minimal = 999999999;
-            int nearestIndex = -1;
-            for (int i = 0; i < sensors4.Length; i++)
-            {
-                float dist = Vector3.Distance(sensors4[i].position, transform.position);
-                if (dist < minimal)
-                {
-                    minimal = dist;
-                    nearestIndex = i;
-                    nearIndex = i;
-                }
-            }
-
-            if (nearestIndex != -1 && sensorRenderers4[nearestIndex] != null)
-            {
-                sensorRenderers4[nearestIndex].color = activeColor;
-                sensorIndex = 4;
-
-                if (chooseIndex != nearestIndex || chooseDistance != 4)
-                {
-                    chooseIndex = nearestIndex;
-                    chooseDistance = 4;
-                    detector.Detection();
-                }
-            }
-        }
-        if (distanceCenter <= detectionDistance5 && distanceCenter > detectionDistance4)
-        {
-
-            float minimal = 999999999;
-            int nearestIndex = -1;
-            for (int i = 0; i < sensors5.Length; i++)
-            {
-                float dist = Vector3.Distance(sensors5[i].position, transform.position);
-                if (dist < minimal)
-                {
-                    minimal = dist;
-                    nearestIndex = i;
-                    nearIndex = i;
-                }
-            }
-
-            if (nearestIndex != -1 && sensorRenderers5[nearestIndex] != null)
-            {
-                sensorRenderers5[nearestIndex].color = activeColor;
-                sensorIndex = 5;
-
-                if (chooseIndex != nearestIndex || chooseDistance != 5)
-                {
-                    chooseIndex = nearestIndex;
-                    chooseDistance = 5;
-                    detector.Detection();
-                }
-            }
+            prevRadius = -1;
+            prevIndex = -1;
         }
     }
 }

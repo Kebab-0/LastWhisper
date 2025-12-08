@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 23640966}
   m_Layer: 5
   m_Name: Detector
-  m_TagString: Untagged
+  m_TagString: Detector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -259,8 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd413b93f0f94d64eae8605dacb6bcf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Detector
-  DetectorText: {fileID: 23640967}
-  timeText: {fileID: 1032817989}
+  displayText: {fileID: 23640967}
+  maxRecords: 10
 --- !u!114 &23640967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,60 +1174,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33f7434f06db4147a8f267b7dc07925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sensors
-  Center: {fileID: 1722964893}
-  sensors1:
-  - {fileID: 843794940}
-  - {fileID: 734727316}
-  - {fileID: 395527531}
-  - {fileID: 1830462310}
-  - {fileID: 1673780347}
-  - {fileID: 641388684}
-  - {fileID: 1685013884}
-  - {fileID: 1109540585}
-  sensors2:
-  - {fileID: 1715338660}
-  - {fileID: 985599723}
-  - {fileID: 5014379}
-  - {fileID: 1144844225}
-  - {fileID: 441066535}
-  - {fileID: 599565682}
-  - {fileID: 686396069}
-  - {fileID: 1048309906}
-  sensors3:
-  - {fileID: 1804092857}
-  - {fileID: 1197613674}
-  - {fileID: 1755317024}
-  - {fileID: 104231384}
-  - {fileID: 862012883}
-  - {fileID: 365226683}
-  - {fileID: 1455954319}
-  - {fileID: 385055899}
-  sensors4:
-  - {fileID: 1162342499}
-  - {fileID: 592554658}
-  - {fileID: 1643721328}
-  - {fileID: 1351706832}
-  - {fileID: 619732608}
-  - {fileID: 698170568}
-  - {fileID: 1166993392}
-  - {fileID: 137985741}
-  sensors5:
-  - {fileID: 1698050695}
-  - {fileID: 1258416175}
-  - {fileID: 1215652652}
-  - {fileID: 2126235925}
-  - {fileID: 524711032}
-  - {fileID: 278278766}
-  - {fileID: 417240103}
-  - {fileID: 1921323764}
-  detectionDistance1: 45
-  detectionDistance2: 75
-  detectionDistance3: 105
-  detectionDistance4: 135
-  detectionDistance5: 165
   activeColor: {r: 1, g: 0, b: 0, a: 1}
   passiveColor: {r: 0.15294118, g: 0.50980395, b: 0.098039225, a: 1}
   detector: {fileID: 23640966}
+  detectionDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!1 &278278764
 GameObject:
   m_ObjectHideFlags: 0
@@ -3683,6 +3638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 843794940}
   - component: {fileID: 843794939}
+  - component: {fileID: 843794941}
   m_Layer: 2
   m_Name: Sensor11
   m_TagString: Sens
@@ -3763,6 +3719,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1574478373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &843794941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843794938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33f7434f06db4147a8f267b7dc07925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sensors
+  activeColor: {r: 1, g: 0, b: 0, a: 0}
+  passiveColor: {r: 0.15294118, g: 0.50980395, b: 0.098039225, a: 0}
+  detector: {fileID: 0}
+  detectionDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!1 &856929134
 GameObject:
   m_ObjectHideFlags: 0
@@ -3775,7 +3752,7 @@ GameObject:
   - component: {fileID: 856929137}
   - component: {fileID: 856929136}
   - component: {fileID: 856929135}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3794,60 +3771,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33f7434f06db4147a8f267b7dc07925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sensors
-  Center: {fileID: 1722964893}
-  sensors1:
-  - {fileID: 843794940}
-  - {fileID: 734727316}
-  - {fileID: 395527531}
-  - {fileID: 1830462310}
-  - {fileID: 1673780347}
-  - {fileID: 641388684}
-  - {fileID: 1685013884}
-  - {fileID: 1109540585}
-  sensors2:
-  - {fileID: 1715338660}
-  - {fileID: 985599723}
-  - {fileID: 5014379}
-  - {fileID: 1144844225}
-  - {fileID: 441066535}
-  - {fileID: 599565682}
-  - {fileID: 686396069}
-  - {fileID: 1048309906}
-  sensors3:
-  - {fileID: 1804092857}
-  - {fileID: 1197613674}
-  - {fileID: 1755317024}
-  - {fileID: 104231384}
-  - {fileID: 862012883}
-  - {fileID: 365226683}
-  - {fileID: 1455954319}
-  - {fileID: 385055899}
-  sensors4:
-  - {fileID: 1162342499}
-  - {fileID: 592554658}
-  - {fileID: 1643721328}
-  - {fileID: 1351706832}
-  - {fileID: 619732608}
-  - {fileID: 698170568}
-  - {fileID: 1166993392}
-  - {fileID: 137985741}
-  sensors5:
-  - {fileID: 1698050695}
-  - {fileID: 1258416175}
-  - {fileID: 1215652652}
-  - {fileID: 2126235925}
-  - {fileID: 524711032}
-  - {fileID: 278278766}
-  - {fileID: 417240103}
-  - {fileID: 1921323764}
-  detectionDistance1: 45
-  detectionDistance2: 75
-  detectionDistance3: 105
-  detectionDistance4: 135
-  detectionDistance5: 165
   activeColor: {r: 1, g: 0, b: 0, a: 1}
   passiveColor: {r: 0.15294118, g: 0.50980395, b: 0.098039225, a: 1}
   detector: {fileID: 23640966}
+  detectionDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &856929136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5579,7 +5511,7 @@ GameObject:
   - component: {fileID: 1351008427}
   - component: {fileID: 1351008426}
   - component: {fileID: 1351008425}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5598,60 +5530,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33f7434f06db4147a8f267b7dc07925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sensors
-  Center: {fileID: 1722964893}
-  sensors1:
-  - {fileID: 843794940}
-  - {fileID: 734727316}
-  - {fileID: 395527531}
-  - {fileID: 1830462310}
-  - {fileID: 1673780347}
-  - {fileID: 641388684}
-  - {fileID: 1685013884}
-  - {fileID: 1109540585}
-  sensors2:
-  - {fileID: 1715338660}
-  - {fileID: 985599723}
-  - {fileID: 5014379}
-  - {fileID: 1144844225}
-  - {fileID: 441066535}
-  - {fileID: 599565682}
-  - {fileID: 686396069}
-  - {fileID: 1048309906}
-  sensors3:
-  - {fileID: 1804092857}
-  - {fileID: 1197613674}
-  - {fileID: 1755317024}
-  - {fileID: 104231384}
-  - {fileID: 862012883}
-  - {fileID: 365226683}
-  - {fileID: 1455954319}
-  - {fileID: 385055899}
-  sensors4:
-  - {fileID: 1162342499}
-  - {fileID: 592554658}
-  - {fileID: 1643721328}
-  - {fileID: 1351706832}
-  - {fileID: 619732608}
-  - {fileID: 698170568}
-  - {fileID: 1166993392}
-  - {fileID: 137985741}
-  sensors5:
-  - {fileID: 1698050695}
-  - {fileID: 1258416175}
-  - {fileID: 1215652652}
-  - {fileID: 2126235925}
-  - {fileID: 524711032}
-  - {fileID: 278278766}
-  - {fileID: 417240103}
-  - {fileID: 1921323764}
-  detectionDistance1: 45
-  detectionDistance2: 75
-  detectionDistance3: 105
-  detectionDistance4: 135
-  detectionDistance5: 165
   activeColor: {r: 1, g: 0, b: 0, a: 1}
   passiveColor: {r: 0.15294118, g: 0.50980395, b: 0.098039225, a: 1}
   detector: {fileID: 23640966}
+  detectionDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &1351008426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5842,7 +5729,7 @@ GameObject:
   - component: {fileID: 1370696094}
   - component: {fileID: 1370696093}
   - component: {fileID: 1370696092}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5856,65 +5743,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370696091}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f33f7434f06db4147a8f267b7dc07925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sensors
-  Center: {fileID: 1722964893}
-  sensors1:
-  - {fileID: 843794940}
-  - {fileID: 734727316}
-  - {fileID: 395527531}
-  - {fileID: 1830462310}
-  - {fileID: 1673780347}
-  - {fileID: 641388684}
-  - {fileID: 1685013884}
-  - {fileID: 1109540585}
-  sensors2:
-  - {fileID: 1715338660}
-  - {fileID: 985599723}
-  - {fileID: 5014379}
-  - {fileID: 1144844225}
-  - {fileID: 441066535}
-  - {fileID: 599565682}
-  - {fileID: 686396069}
-  - {fileID: 1048309906}
-  sensors3:
-  - {fileID: 1804092857}
-  - {fileID: 1197613674}
-  - {fileID: 1755317024}
-  - {fileID: 104231384}
-  - {fileID: 862012883}
-  - {fileID: 365226683}
-  - {fileID: 1455954319}
-  - {fileID: 385055899}
-  sensors4:
-  - {fileID: 1162342499}
-  - {fileID: 592554658}
-  - {fileID: 1643721328}
-  - {fileID: 1351706832}
-  - {fileID: 619732608}
-  - {fileID: 698170568}
-  - {fileID: 1166993392}
-  - {fileID: 137985741}
-  sensors5:
-  - {fileID: 1698050695}
-  - {fileID: 1258416175}
-  - {fileID: 1215652652}
-  - {fileID: 2126235925}
-  - {fileID: 524711032}
-  - {fileID: 278278766}
-  - {fileID: 417240103}
-  - {fileID: 1921323764}
-  detectionDistance1: 45
-  detectionDistance2: 75
-  detectionDistance3: 105
-  detectionDistance4: 135
-  detectionDistance5: 165
   activeColor: {r: 1, g: 0, b: 0, a: 1}
   passiveColor: {r: 0.15294118, g: 0.50980395, b: 0.098039225, a: 1}
   detector: {fileID: 23640966}
+  detectionDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &1370696093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5922,7 +5764,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370696091}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87daed7d4c38a0546ae34fe2b3667843, type: 3}
   m_Name: 

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1606454397211132469}
   - component: {fileID: 5733395306978941618}
   - component: {fileID: 7635350172609438310}
-  m_Layer: 0
+  - component: {fileID: -1153643367587043558}
+  m_Layer: 6
   m_Name: MutantWolf
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +127,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 10
-  moveSpeed: 20
   movementSound: {fileID: 0}
   entityColor: {r: 1, g: 1, b: 1, a: 1}
   entityMaterial: {fileID: 0}
+--- !u!114 &-1153643367587043558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4664221600247097050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33f7434f06db4147a8f267b7dc07925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sensors
+  activeColor: {r: 1, g: 0, b: 0, a: 1}
+  passiveColor: {r: 0.20000002, g: 0.50980395, b: 0.16470589, a: 1}
+  detector: {fileID: 0}
+  detectionDistances:
+  - 15
+  - 30
+  - 45
+  - 60
+  - 75
