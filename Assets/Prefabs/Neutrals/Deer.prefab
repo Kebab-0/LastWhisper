@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554e39da0b533d54192cd613bcfa90e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Deer
-  health: 100
+  health: 10
   damage: 10
   movementSound: {fileID: 0}
   entityColor: {r: 1, g: 1, b: 1, a: 1}

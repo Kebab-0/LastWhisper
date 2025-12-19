@@ -1,0 +1,1248 @@
+fileFormatVersion: 2
+guid: 165ba697bde95f444a247fac6ca96df5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5716685386054949802
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_0
+  - first:
+      213: 1665456331292237646
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_1
+  - first:
+      213: -2664678203204882040
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_2
+  - first:
+      213: 5525427329152284368
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_3
+  - first:
+      213: -5391277195808389684
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_4
+  - first:
+      213: 3638852787756026606
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_5
+  - first:
+      213: 1225307018619572696
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_6
+  - first:
+      213: 7375750962410678744
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_7
+  - first:
+      213: -7962011460548008778
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_8
+  - first:
+      213: 1567883860250139922
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_9
+  - first:
+      213: 8044746269607524814
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_10
+  - first:
+      213: -4657131443087642256
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_11
+  - first:
+      213: 4269719340552561655
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_12
+  - first:
+      213: 5368431555902319614
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_13
+  - first:
+      213: -349787785351485807
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_14
+  - first:
+      213: -7218562693386264015
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_15
+  - first:
+      213: -2440937960240347945
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_16
+  - first:
+      213: -7133807376396075945
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_17
+  - first:
+      213: -6504176155770357258
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_18
+  - first:
+      213: 1053940519081277874
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_19
+  - first:
+      213: -17154938919103677
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_20
+  - first:
+      213: 5499125969137943767
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_21
+  - first:
+      213: -264552857133037157
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_22
+  - first:
+      213: 6187121508306309840
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_23
+  - first:
+      213: -3860168615494366732
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_24
+  - first:
+      213: -4202211497908567582
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_25
+  - first:
+      213: 2684604618060280881
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_26
+  - first:
+      213: -1085088712512728023
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_27
+  - first:
+      213: 4270624357615406694
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_28
+  - first:
+      213: 9116141697295953222
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_29
+  - first:
+      213: 700372012006634113
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_30
+  - first:
+      213: 8069810825529735008
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_31
+  - first:
+      213: -2724175838864929882
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_32
+  - first:
+      213: -1486773657613425592
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_33
+  - first:
+      213: 7650358087768241106
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_34
+  - first:
+      213: -6517372564129320482
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_35
+  - first:
+      213: 755179153724634669
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_36
+  - first:
+      213: -6007076906719890229
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_37
+  - first:
+      213: 2920949457892121956
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_38
+  - first:
+      213: 3016237780917146072
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_39
+  - first:
+      213: -4394991039262353476
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_40
+  - first:
+      213: 3795208752858997063
+    second: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_41
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 105
+        width: 99
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 654278ffde04aa0b0800000000000000
+      internalID: -5716685386054949802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_1
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 156
+        width: 34
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4f599795b3ec1710800000000000000
+      internalID: 1665456331292237646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_2
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 178
+        width: 18
+        height: 211
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8813f31da49250bd0800000000000000
+      internalID: -2664678203204882040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_3
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 85
+        width: 70
+        height: 299
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d67b5281e24eac40800000000000000
+      internalID: 5525427329152284368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_4
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 383
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc54d2264f55e25b0800000000000000
+      internalID: -5391277195808389684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_5
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 383
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eea432cb45dcf7230800000000000000
+      internalID: 3638852787756026606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_6
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 372
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d1dc91dd3a210110800000000000000
+      internalID: 1225307018619572696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_7
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 146
+        width: 47
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d9eb320c6eeb5660800000000000000
+      internalID: 7375750962410678744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_8
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 115
+        width: 42
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b4627cd2c0418190800000000000000
+      internalID: -7962011460548008778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_9
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 362
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21d174b501e32c510800000000000000
+      internalID: 1567883860250139922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_10
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 95
+        width: 24
+        height: 287
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec9fa1cfb1ea4af60800000000000000
+      internalID: 8044746269607524814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_11
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 372
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 071757680ab8e5fb0800000000000000
+      internalID: -4657131443087642256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_12
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 130
+        width: 23
+        height: 224
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f320484e17114b30800000000000000
+      internalID: 4269719340552561655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_13
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 175
+        width: 23
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efb2e829e00808a40800000000000000
+      internalID: 5368431555902319614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_14
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 162
+        width: 25
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 196aa5bccdd452bf0800000000000000
+      internalID: -349787785351485807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_15
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 352
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13223d7d97382db90800000000000000
+      internalID: -7218562693386264015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_16
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 175
+        width: 22
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d48b199bdb002ed0800000000000000
+      internalID: -2440937960240347945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_17
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 123
+        width: 28
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75cb9d9dcff9ffc90800000000000000
+      internalID: -7133807376396075945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_18
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 132
+        width: 47
+        height: 220
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f9fdb63f368cb5a0800000000000000
+      internalID: -6504176155770357258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_19
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 351
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b9fa3e615950ae00800000000000000
+      internalID: 1053940519081277874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_20
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 136
+        width: 60
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34355978cad03cff0800000000000000
+      internalID: -17154938919103677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_21
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 126
+        width: 24
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d4c79deee1d05c40800000000000000
+      internalID: 5499125969137943767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_22
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 146
+        width: 13
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b99454ef39e145cf0800000000000000
+      internalID: -264552857133037157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_23
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 341
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d2d6c42b321dd550800000000000000
+      internalID: 6187121508306309840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_24
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 331
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f9c854a81ded6ac0800000000000000
+      internalID: -3860168615494366732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_25
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 126
+        width: 28
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e1091c28eebea5c0800000000000000
+      internalID: -4202211497908567582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_26
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 342
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1343bdd2da1a14520800000000000000
+      internalID: 2684604618060280881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_27
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 310
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92494e4a09df0f0f0800000000000000
+      internalID: -1085088712512728023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_28
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 103
+        width: 15
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66e0cccf93e444b30800000000000000
+      internalID: 4270624357615406694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_29
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 242
+        width: 10
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64da375039a038e70800000000000000
+      internalID: 9116141697295953222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_30
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 156
+        width: 21
+        height: 177
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 182f74a52a838b900800000000000000
+      internalID: 700372012006634113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_31
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 156
+        width: 10
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0673d4ca03abdff60800000000000000
+      internalID: 8069810825529735008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_32
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 187
+        width: 10
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ab01c20288c13ad0800000000000000
+      internalID: -2724175838864929882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_33
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 229
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8442b845c3bed5be0800000000000000
+      internalID: -1486773657613425592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_34
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 175
+        width: 10
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d376f1c5288b2a60800000000000000
+      internalID: 7650358087768241106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_35
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 167
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed1f136fe24ad85a0800000000000000
+      internalID: -6517372564129320482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_36
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 150
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d26798f607fea7a00800000000000000
+      internalID: 755179153724634669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_37
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 140
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc43284516392aca0800000000000000
+      internalID: -6007076906719890229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_38
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 131
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46d978c5e0c498820800000000000000
+      internalID: 2920949457892121956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_39
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 142
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d1dda1f744dbd920800000000000000
+      internalID: 3016237780917146072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_40
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 105
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb71eb97fead103c0800000000000000
+      internalID: -4394991039262353476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: abstract-blue-sound-wave-pattern-elements-vector-21839860 1_41
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 106
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7412d9ab04a4ba430800000000000000
+      internalID: 3795208752858997063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_0: -5716685386054949802
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_1: 1665456331292237646
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_10: 8044746269607524814
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_11: -4657131443087642256
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_12: 4269719340552561655
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_13: 5368431555902319614
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_14: -349787785351485807
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_15: -7218562693386264015
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_16: -2440937960240347945
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_17: -7133807376396075945
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_18: -6504176155770357258
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_19: 1053940519081277874
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_2: -2664678203204882040
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_20: -17154938919103677
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_21: 5499125969137943767
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_22: -264552857133037157
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_23: 6187121508306309840
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_24: -3860168615494366732
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_25: -4202211497908567582
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_26: 2684604618060280881
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_27: -1085088712512728023
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_28: 4270624357615406694
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_29: 9116141697295953222
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_3: 5525427329152284368
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_30: 700372012006634113
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_31: 8069810825529735008
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_32: -2724175838864929882
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_33: -1486773657613425592
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_34: 7650358087768241106
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_35: -6517372564129320482
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_36: 755179153724634669
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_37: -6007076906719890229
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_38: 2920949457892121956
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_39: 3016237780917146072
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_4: -5391277195808389684
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_40: -4394991039262353476
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_41: 3795208752858997063
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_5: 3638852787756026606
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_6: 1225307018619572696
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_7: 7375750962410678744
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_8: -7962011460548008778
+      abstract-blue-sound-wave-pattern-elements-vector-21839860 1_9: 1567883860250139922
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

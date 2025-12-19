@@ -36,7 +36,7 @@ public class Twister : MonoBehaviour
             switch (rotationCount)
             {
                 case 1:
-                    shadow.SetActive(true);
+                   
                     detector.SetActive(true);
                     clock.SetActive(true);
                     break;
@@ -49,7 +49,7 @@ public class Twister : MonoBehaviour
                     radio.SetActive(false);
                     break;
                 case 4:
-                    shadow.SetActive(false);
+            
                     break;
                 case 5:
 
