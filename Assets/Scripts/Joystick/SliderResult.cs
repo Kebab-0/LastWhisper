@@ -4,10 +4,30 @@ public class SliderResult : MonoBehaviour
 {
     public VerticalDiscreteSlider2D slider1;
     public VerticalDiscreteSlider2D slider2;
+    public Detector detector;
+    public bool playOnChangeOnly = true;
+
+    private int lastResult = -1;
 
     void Update()
     {
+        if (slider1 == null || slider2 == null)
+            return;
+
         int result = slider1.CurrentValue * 10 + slider2.CurrentValue;
-        Debug.Log("Результат: " + result);
+
+        if (!playOnChangeOnly || result != lastResult)
+        {
+            lastResult = result;
+            TryPlaySensorSound(result);
+        }
+    }
+
+    private void TryPlaySensorSound(int result)
+    {
+        if (detector == null)
+            return;
+
+        detector.TryPlaySensorSound(result);
     }
 }

@@ -3,17 +3,22 @@ using System.Collections.Generic;
 
 public class Sensors : MonoBehaviour
 {
-    public Color activeColor = Color.red;      // Цвет активного сенсора
-    public Color passiveColor = Color.gray;    // Цвет пассивного сенсора
-    public Detector detector;                  // Ссылка на Detector (UI)
+    private Entity ownerEntity;
+        ownerEntity = GetComponent<Entity>();
+        if (ownerEntity == null)
+            ownerEntity = GetComponentInParent<Entity>();
 
-    public float[] detectionDistances = new float[5] { 2f, 4f, 6f, 8f, 10f }; // Радиусы зон
+    public Color activeColor = Color.red;      // Г–ГўГҐГІ Г ГЄГІГЁГўГ­Г®ГЈГ® Г±ГҐГ­Г±Г®Г°Г 
+    public Color passiveColor = Color.gray;    // Г–ГўГҐГІ ГЇГ Г±Г±ГЁГўГ­Г®ГЈГ® Г±ГҐГ­Г±Г®Г°Г 
+    public Detector detector;                  // Г‘Г±Г»Г«ГЄГ  Г­Г  Detector (UI)
+
+    public float[] detectionDistances = new float[5] { 2f, 4f, 6f, 8f, 10f }; // ГђГ Г¤ГЁГіГ±Г» Г§Г®Г­
 
     private Dictionary<int, Transform[]> sensors = new Dictionary<int, Transform[]>();
     private Dictionary<int, SpriteRenderer[]> renderers = new Dictionary<int, SpriteRenderer[]>();
 
-    private int prevRadius = -1;   // Последний активный радиус
-    private int prevIndex = -1;    // Последний активный сенсор
+    private int prevRadius = -1;   // ГЏГ®Г±Г«ГҐГ¤Г­ГЁГ© Г ГЄГІГЁГўГ­Г»Г© Г°Г Г¤ГЁГіГ±
+    private int prevIndex = -1;    // ГЏГ®Г±Г«ГҐГ¤Г­ГЁГ© Г ГЄГІГЁГўГ­Г»Г© Г±ГҐГ­Г±Г®Г°
 
     void Start()
     {
@@ -22,7 +27,7 @@ public class Sensors : MonoBehaviour
     }
 
     // ------------------------------
-    // Авто-находим Detector
+    // ГЂГўГІГ®-Г­Г ГµГ®Г¤ГЁГ¬ Detector
     // ------------------------------
     void AutoFindDetector()
     {
@@ -31,16 +36,16 @@ public class Sensors : MonoBehaviour
         detector = FindObjectOfType<Detector>();
         if (detector == null)
         {
-            Debug.LogWarning("Sensors: Detector не найден! Присвойте вручную в инспекторе.");
+            Debug.LogWarning("Sensors: Detector Г­ГҐ Г­Г Г©Г¤ГҐГ­! ГЏГ°ГЁГ±ГўГ®Г©ГІГҐ ГўГ°ГіГ·Г­ГіГѕ Гў ГЁГ­Г±ГЇГҐГЄГІГ®Г°ГҐ.");
         }
     }
 
     // ------------------------------
-    // Авто-находим сенсоры по тегу "Sens"
+    // ГЂГўГІГ®-Г­Г ГµГ®Г¤ГЁГ¬ Г±ГҐГ­Г±Г®Г°Г» ГЇГ® ГІГҐГЈГі "Sens"
     // ------------------------------
     void AutoDetectSensors()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("Sens"); // все сенсоры должны иметь тег "Sens"
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Sens"); // ГўГ±ГҐ Г±ГҐГ­Г±Г®Г°Г» Г¤Г®Г«Г¦Г­Г» ГЁГ¬ГҐГІГј ГІГҐГЈ "Sens"
         Dictionary<int, List<Transform>> temp = new Dictionary<int, List<Transform>>();
 
         int maxRadius = detectionDistances.Length;
@@ -75,7 +80,7 @@ public class Sensors : MonoBehaviour
     }
 
     // ------------------------------
-    // Основной Update
+    // ГЋГ±Г­Г®ГўГ­Г®Г© Update
     // ------------------------------
     void Update()
     {
@@ -85,7 +90,7 @@ public class Sensors : MonoBehaviour
 
         int maxRadius = Mathf.Min(5, detectionDistances.Length);
 
-        // Обход радиусов
+        // ГЋГЎГµГ®Г¤ Г°Г Г¤ГЁГіГ±Г®Гў
         for (int r = 1; r <= maxRadius; r++)
         {
             if (!sensors.ContainsKey(r) || sensors[r] == null || sensors[r].Length == 0) continue;
@@ -97,7 +102,7 @@ public class Sensors : MonoBehaviour
 
                 float d = Vector3.Distance(transform.position, arr[i].position);
 
-                // Проверяем индекс массива detectionDistances
+                // ГЏГ°Г®ГўГҐГ°ГїГҐГ¬ ГЁГ­Г¤ГҐГЄГ± Г¬Г Г±Г±ГЁГўГ  detectionDistances
                 if (r - 1 >= 0 && r - 1 < detectionDistances.Length && d <= detectionDistances[r - 1] && d < minDist)
                 {
                     minDist = d;
@@ -107,7 +112,7 @@ public class Sensors : MonoBehaviour
             }
         }
 
-        // Деактивируем предыдущий сенсор
+        // Г„ГҐГ ГЄГІГЁГўГЁГ°ГіГҐГ¬ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© Г±ГҐГ­Г±Г®Г°
         if (prevRadius != -1 && prevIndex != -1 &&
             renderers.ContainsKey(prevRadius) &&
             renderers[prevRadius] != null &&
@@ -117,7 +122,7 @@ public class Sensors : MonoBehaviour
             renderers[prevRadius][prevIndex].color = passiveColor;
         }
 
-        // Активируем текущий сенсор
+                detector.Detection(sensors[nearestRadius][nearestIndex].gameObject, ownerEntity);
         if (nearestRadius != -1 && nearestIndex != -1 &&
             sensors.ContainsKey(nearestRadius) &&
             renderers.ContainsKey(nearestRadius) &&
@@ -130,7 +135,7 @@ public class Sensors : MonoBehaviour
         {
             renderers[nearestRadius][nearestIndex].color = activeColor;
 
-            // Детектор срабатывает только при смене сенсора
+            // Г„ГҐГІГҐГЄГІГ®Г° Г±Г°Г ГЎГ ГІГ»ГўГ ГҐГІ ГІГ®Г«ГјГЄГ® ГЇГ°ГЁ Г±Г¬ГҐГ­ГҐ Г±ГҐГ­Г±Г®Г°Г 
             bool isNewSensor = (nearestRadius != prevRadius || nearestIndex != prevIndex);
 
             prevRadius = nearestRadius;
