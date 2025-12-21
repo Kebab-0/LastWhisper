@@ -15,24 +15,25 @@ public class Repressor : Entity
         entityColor = Color.green;
         sectorManager = SectorManager.Instance;
         patrolPoint = GetRandomPatrolPoint();
+        EnsureMoveSpeed(60f);
     }
 
     protected override void Move()
     {
-        // 1. Проверяем последний уничтоженный сканер
+        // 1. РџСЂРѕРІРµСЂСЏРµРј РїРѕСЃР»РµРґРЅРёР№ СѓРЅРёС‡С‚РѕР¶РµРЅРЅС‹Р№ СЃРєР°РЅРµСЂ
         if (sectorManager != null)
         {
             targetScanner = sectorManager.GetLastDestroyedScanner();
 
             if (targetScanner != null)
             {
-                // Едем к месту последнего уничтоженного сканера
+                // Р•РґРµРј Рє РјРµСЃС‚Сѓ РїРѕСЃР»РµРґРЅРµРіРѕ СѓРЅРёС‡С‚РѕР¶РµРЅРЅРѕРіРѕ СЃРєР°РЅРµСЂР°
                 MoveTowardsWorld(targetScanner.transform.position);
                 return;
             }
         }
 
-        // 2. Если нет целей - патрулируем
+        // 2. Р•СЃР»Рё РЅРµС‚ С†РµР»РµР№ - РїР°С‚СЂСѓР»РёСЂСѓРµРј
         patrolTimer += Time.deltaTime;
 
         MoveTowardsWorld(patrolPoint);
@@ -46,7 +47,7 @@ public class Repressor : Entity
 
     private Vector3 GetRandomPatrolPoint()
     {
-        // Случайная точка в пределах рабочей зоны
+        // РЎР»СѓС‡Р°Р№РЅР°СЏ С‚РѕС‡РєР° РІ РїСЂРµРґРµР»Р°С… СЂР°Р±РѕС‡РµР№ Р·РѕРЅС‹
         Vector2 randomPoint = Random.insideUnitCircle * WORK_RADIUS;
         return new Vector3(randomPoint.x, randomPoint.y, 0);
     }

@@ -5,7 +5,8 @@ public abstract class Entity : MonoBehaviour
     [Header("Основные характеристики")]
     [SerializeField] protected float health = 100f;
     [SerializeField] protected float damage = 10f;
-    protected float moveSpeed;
+    [SerializeField, Tooltip("Скорость перемещения. Если не задано, возьмется значение по умолчанию для конкретного типа сущности.")]
+    protected float moveSpeed = 0f;
     [SerializeField] protected AudioClip movementSound;
     [SerializeField] protected Color entityColor = Color.white;
     [SerializeField] protected Material entityMaterial; // Материал для 3D объектов
@@ -197,6 +198,14 @@ public abstract class Entity : MonoBehaviour
             target,
             moveSpeed * Time.deltaTime
         );
+    }
+
+    protected void EnsureMoveSpeed(float defaultSpeed)
+    {
+        if (moveSpeed <= 0.001f)
+        {
+            moveSpeed = defaultSpeed;
+        }
     }
 
     protected void MoveTowardsPolar(Vector2 target)
