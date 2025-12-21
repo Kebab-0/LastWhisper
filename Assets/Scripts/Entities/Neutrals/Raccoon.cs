@@ -17,25 +17,24 @@ public class Raccoon : Entity
     {
         entityColor = new Color(0.4f, 0.4f, 0.4f);
 
-        // Стартовая позиция
+        // РЎС‚Р°СЂС‚РѕРІР°СЏ РїРѕР·РёС†РёСЏ
         startPosition = transform.position;
 
-        // Противоположная точка выхода
+        // РџСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅР°СЏ С‚РѕС‡РєР° РІС‹С…РѕРґР°
         float startAngle = Mathf.Atan2(startPosition.y, startPosition.x);
         float exitAngle = (startAngle + Mathf.PI) % (2f * Mathf.PI);
         exitPosition = CoordinateConverter.PolarToWorld2D(new Vector2(Entity.SPAWN_RADIUS, exitAngle));
 
-        // Центр
+        // Р¦РµРЅС‚СЂ
         centerPosition = Vector3.zero;
 
-        // Скорость
-    
-            moveSpeed = 60f;
+        // РЎРєРѕСЂРѕСЃС‚СЊ (РјРѕР¶РЅРѕ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РІ РёРЅСЃРїРµРєС‚РѕСЂРµ)
+        EnsureMoveSpeed(60f);
 
         journeyTime = 0f;
         currentState = RaccoonState.MovingToCenter;
 
-        Debug.Log($"Енот: старт {startPosition}, выход {exitPosition}");
+        Debug.Log($"Р•РЅРѕС‚: СЃС‚Р°СЂС‚ {startPosition}, РІС‹С…РѕРґ {exitPosition}");
     }
 
     protected override void Move()
@@ -70,13 +69,13 @@ public class Raccoon : Entity
         {
             currentState = RaccoonState.Crossing;
             journeyTime = 0f;
-            Debug.Log("Енот достиг центра");
+            Debug.Log("Р•РЅРѕС‚ РґРѕСЃС‚РёРі С†РµРЅС‚СЂР°");
         }
     }
 
     private void CrossCenter(float progress)
     {
-        // Вращаемся в центре
+        // Р’СЂР°С‰Р°РµРјСЃСЏ РІ С†РµРЅС‚СЂРµ
         float radius = 15f;
         float angle = progress * 2f * Mathf.PI;
 
@@ -93,7 +92,7 @@ public class Raccoon : Entity
         {
             currentState = RaccoonState.MovingToExit;
             journeyTime = 0f;
-            Debug.Log("Енот закончил осмотр центра");
+            Debug.Log("Р•РЅРѕС‚ Р·Р°РєРѕРЅС‡РёР» РѕСЃРјРѕС‚СЂ С†РµРЅС‚СЂР°");
         }
     }
 
@@ -105,7 +104,7 @@ public class Raccoon : Entity
         if (progress >= 1f)
         {
             currentState = RaccoonState.Completed;
-            Debug.Log("Енот достиг выхода и исчезает");
+            Debug.Log("Р•РЅРѕС‚ РґРѕСЃС‚РёРі РІС‹С…РѕРґР° Рё РёСЃС‡РµР·Р°РµС‚");
             DestroyEntity();
         }
     }

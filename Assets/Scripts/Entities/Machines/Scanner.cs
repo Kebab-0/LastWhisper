@@ -13,6 +13,7 @@ public class Scanner : Entity
     {
         entityColor = Color.blue;
         sectorManager = SectorManager.Instance;
+        EnsureMoveSpeed(30f);
 
         if (sectorManager != null)
             sectorManager.RegisterScanner(this);
@@ -20,15 +21,15 @@ public class Scanner : Entity
 
     protected override void Move()
     {
-        // Вращение
+        // Р’СЂР°С‰РµРЅРёРµ
         rotationAngle += rotationSpeed * Time.deltaTime;
         transform.rotation = Quaternion.Euler(0, 0, rotationAngle);
 
-        // Медленное движение к центру
+        // РњРµРґР»РµРЅРЅРѕРµ РґРІРёР¶РµРЅРёРµ Рє С†РµРЅС‚СЂСѓ
         Vector3 directionToCenter = -transform.position.normalized;
         transform.position += directionToCenter * (moveSpeed * 0.3f * Time.deltaTime);
 
-        // Сканирование
+        // РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ
         ScanForTargets();
     }
 
@@ -39,8 +40,8 @@ public class Scanner : Entity
         {
             if (hit.CompareTag("Player") || hit.GetComponent<Entity>() != null)
             {
-                Debug.Log($"Scanner обнаружен: {hit.name}");
-                // Можно активировать тревогу или другую логику
+                Debug.Log($"Scanner РѕР±РЅР°СЂСѓР¶РµРЅ: {hit.name}");
+                // РњРѕР¶РЅРѕ Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ С‚СЂРµРІРѕРіСѓ РёР»Рё РґСЂСѓРіСѓСЋ Р»РѕРіРёРєСѓ
             }
         }
     }

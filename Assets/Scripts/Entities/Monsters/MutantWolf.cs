@@ -26,43 +26,42 @@ public class MutantWolf : Entity
     private float searchRadius = 100f;
     private float stateTimer = 0f;
 
-    // Используем мировые координаты
+    // РСЃРїРѕР»СЊР·СѓРµРј РјРёСЂРѕРІС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
     protected override bool UsePolarMovement => false;
 
     protected override void InitializeMovement()
     {
         entityColor = Color.red;
 
-        // Получаем спавн позицию
+        // РџРѕР»СѓС‡Р°РµРј СЃРїР°РІРЅ РїРѕР·РёС†РёСЋ
         spawnPosition = transform.position;
 
-        // Получаем SectorManager
+        // РџРѕР»СѓС‡Р°РµРј SectorManager
         sectorManager = SectorManager.Instance;
         if (sectorManager == null)
         {
-            Debug.LogError("SectorManager не найден!");
+            Debug.LogError("SectorManager РЅРµ РЅР°Р№РґРµРЅ!");
             return;
         }
 
-        // Первый сектор - ближе к месту спавна
+        // РџРµСЂРІС‹Р№ СЃРµРєС‚РѕСЂ - Р±Р»РёР¶Рµ Рє РјРµСЃС‚Сѓ СЃРїР°РІРЅР°
         Vector2 firstSectorPolar = CoordinateConverter.WorldToPolar2D(spawnPosition);
         firstSectorPolar.x = Mathf.Min(firstSectorPolar.x * 0.7f, Entity.WORK_RADIUS * 0.7f);
         firstSectorPoint = CoordinateConverter.PolarToWorld2D(firstSectorPolar);
 
-        // Второй сектор - противоположная сторона
+        // Р’С‚РѕСЂРѕР№ СЃРµРєС‚РѕСЂ - РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅР°СЏ СЃС‚РѕСЂРѕРЅР°
         Vector2 secondSectorPolar = firstSectorPolar;
         secondSectorPolar.y = (secondSectorPolar.y + Mathf.PI) % (2f * Mathf.PI);
         secondSectorPolar.x = Entity.WORK_RADIUS * 0.4f;
         secondSectorPoint = CoordinateConverter.PolarToWorld2D(secondSectorPolar);
 
-        // Скорость
-        if (moveSpeed <= 0.1f)
-            moveSpeed = 80f;
+        // РЎРєРѕСЂРѕСЃС‚СЊ (РјРѕР¶РЅРѕ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РІ РёРЅСЃРїРµРєС‚РѕСЂРµ)
+        EnsureMoveSpeed(80f);
 
         currentState = WolfState.MovingToFirstSector;
         stateTimer = 0f;
 
-        Debug.Log($"Волк создан. Спавн: {spawnPosition}, Первый сектор: {firstSectorPoint}");
+        Debug.Log($"Р’РѕР»Рє СЃРѕР·РґР°РЅ. РЎРїР°РІРЅ: {spawnPosition}, РџРµСЂРІС‹Р№ СЃРµРєС‚РѕСЂ: {firstSectorPoint}");
     }
 
     protected override void Move()
@@ -100,11 +99,11 @@ public class MutantWolf : Entity
                 break;
 
             case WolfState.Killing:
-                // Ждем завершения убийства
+                // Р–РґРµРј Р·Р°РІРµСЂС€РµРЅРёСЏ СѓР±РёР№СЃС‚РІР°
                 break;
 
             case WolfState.Dead:
-                // Уже мертв
+                // РЈР¶Рµ РјРµСЂС‚РІ
                 break;
         }
     }
@@ -117,13 +116,13 @@ public class MutantWolf : Entity
         {
             currentState = WolfState.SearchingFirstSector;
             stateTimer = 0f;
-            Debug.Log("Волк достиг первого сектора");
+            Debug.Log("Р’РѕР»Рє РґРѕСЃС‚РёРі РїРµСЂРІРѕРіРѕ СЃРµРєС‚РѕСЂР°");
         }
     }
 
     private void SearchFirstSector()
     {
-        // Ищем нейтралов в секторе
+        // РС‰РµРј РЅРµР№С‚СЂР°Р»РѕРІ РІ СЃРµРєС‚РѕСЂРµ
         float angle = Mathf.Atan2(firstSectorPoint.y, firstSectorPoint.x);
         var neutrals = sectorManager.GetNeutralsInSector(angle, searchRadius);
 
@@ -131,13 +130,13 @@ public class MutantWolf : Entity
         {
             currentTarget = neutrals[0];
             currentState = WolfState.ChasingNeutral;
-            Debug.Log($"Волк обнаружил цель: {currentTarget.name}");
+            Debug.Log($"Р’РѕР»Рє РѕР±РЅР°СЂСѓР¶РёР» С†РµР»СЊ: {currentTarget.name}");
         }
         else if (stateTimer > 5f)
         {
             currentState = WolfState.MovingToSecondSector;
             stateTimer = 0f;
-            Debug.Log("В первом секторе нет целей, двигаюсь ко второму");
+            Debug.Log("Р’ РїРµСЂРІРѕРј СЃРµРєС‚РѕСЂРµ РЅРµС‚ С†РµР»РµР№, РґРІРёРіР°СЋСЃСЊ РєРѕ РІС‚РѕСЂРѕРјСѓ");
         }
     }
 
@@ -149,13 +148,13 @@ public class MutantWolf : Entity
         {
             currentState = WolfState.SearchingSecondSector;
             stateTimer = 0f;
-            Debug.Log("Волк достиг второго сектора");
+            Debug.Log("Р’РѕР»Рє РґРѕСЃС‚РёРі РІС‚РѕСЂРѕРіРѕ СЃРµРєС‚РѕСЂР°");
         }
     }
 
     private void SearchSecondSector()
     {
-        // Ищем нейтралов в секторе
+        // РС‰РµРј РЅРµР№С‚СЂР°Р»РѕРІ РІ СЃРµРєС‚РѕСЂРµ
         float angle = Mathf.Atan2(secondSectorPoint.y, secondSectorPoint.x);
         var neutrals = sectorManager.GetNeutralsInSector(angle, searchRadius);
 
@@ -163,13 +162,13 @@ public class MutantWolf : Entity
         {
             currentTarget = neutrals[0];
             currentState = WolfState.ChasingNeutral;
-            Debug.Log($"Волк обнаружил цель во втором секторе: {currentTarget.name}");
+            Debug.Log($"Р’РѕР»Рє РѕР±РЅР°СЂСѓР¶РёР» С†РµР»СЊ РІРѕ РІС‚РѕСЂРѕРј СЃРµРєС‚РѕСЂРµ: {currentTarget.name}");
         }
         else if (stateTimer > 5f)
         {
             currentState = WolfState.MovingToBunker;
             stateTimer = 0f;
-            Debug.Log("Целей нет, двигаюсь к бункеру");
+            Debug.Log("Р¦РµР»РµР№ РЅРµС‚, РґРІРёРіР°СЋСЃСЊ Рє Р±СѓРЅРєРµСЂСѓ");
         }
     }
 
@@ -195,13 +194,13 @@ public class MutantWolf : Entity
 
         if (currentTarget != null)
         {
-            Debug.Log($"Волк убивает {currentTarget.name}");
+            Debug.Log($"Р’РѕР»Рє СѓР±РёРІР°РµС‚ {currentTarget.name}");
             currentTarget.TakeDamage(1000f);
         }
 
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("Волк исчезает после убийства");
+        Debug.Log("Р’РѕР»Рє РёСЃС‡РµР·Р°РµС‚ РїРѕСЃР»Рµ СѓР±РёР№СЃС‚РІР°");
         DestroyEntity();
     }
 
@@ -213,18 +212,18 @@ public class MutantWolf : Entity
         {
             currentState = WolfState.AttackingBunker;
             stateTimer = 0f;
-            Debug.Log("Волк достиг бункера");
+            Debug.Log("Р’РѕР»Рє РґРѕСЃС‚РёРі Р±СѓРЅРєРµСЂР°");
         }
     }
 
     private void AttackBunker()
     {
-        // Вращаемся вокруг бункера
+        // Р’СЂР°С‰Р°РµРјСЃСЏ РІРѕРєСЂСѓРі Р±СѓРЅРєРµСЂР°
         transform.RotateAround(Vector3.zero, Vector3.forward, 90f * Time.deltaTime);
 
         if (stateTimer > 3f)
         {
-            Debug.Log("Волк уничтожен электричеством бункера");
+            Debug.Log("Р’РѕР»Рє СѓРЅРёС‡С‚РѕР¶РµРЅ СЌР»РµРєС‚СЂРёС‡РµСЃС‚РІРѕРј Р±СѓРЅРєРµСЂР°");
             TakeDamage(1000f);
         }
     }
@@ -236,7 +235,7 @@ public class MutantWolf : Entity
         if (currentHealth <= 0)
         {
             currentState = WolfState.Dead;
-            Debug.Log("Волк мертв");
+            Debug.Log("Р’РѕР»Рє РјРµСЂС‚РІ");
         }
     }
 }
