@@ -28,6 +28,7 @@ public abstract class Entity : MonoBehaviour
     public float Damage => damage;
     public float MoveSpeed => moveSpeed;
     public Vector2 PolarPosition => polarPosition;
+    public AudioClip EmittedSound => movementSound;
 
     // Определяет, использует ли сущность полярное движение
     protected virtual bool UsePolarMovement => true;

@@ -4,19 +4,52 @@ using System.Collections.Generic;
 
 public class Detector : MonoBehaviour
 {
-    public Text displayText;              // UI Text для вывода
-    public int maxRecords = 10;           // Максимум записей в списке
+    [SerializeField] private AudioSource audioSource;
+    private readonly Dictionary<string, AudioClip> sensorSounds = new Dictionary<string, AudioClip>();
+
+    private void Awake()
+    {
+        EnsureAudioSource();
+    }
+    public void Detection(GameObject sensor, Entity activator)
+        if (activator != null && activator.EmittedSound != null)
+        {
+            sensorSounds[name] = activator.EmittedSound;
+        }
+
+    public bool TryPlaySensorSound(int sensorCode)
+    {
+        string key = $"Sensor{sensorCode}";
+        if (!sensorSounds.TryGetValue(key, out AudioClip clip) || clip == null)
+            return false;
+
+        EnsureAudioSource();
+        audioSource.PlayOneShot(clip);
+        return true;
+    }
+
+    private void EnsureAudioSource()
+    {
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+        if (displayText == null) return;
+
+    public int maxRecords = 10;           // ГЊГ ГЄГ±ГЁГ¬ГіГ¬ Г§Г ГЇГЁГ±ГҐГ© Гў Г±ГЇГЁГ±ГЄГҐ
 
     private Queue<string> recentSensors = new Queue<string>();
 
-    // Вызывается с Sensors
+    // Г‚Г»Г§Г»ГўГ ГҐГІГ±Гї Г± Sensors
     public void Detection(GameObject sensor)
     {
         if (sensor == null) return;
 
         string name = sensor.name;
 
-        // Если уже есть в очереди, удаляем, чтобы переместить в конец
+        // Г…Г±Г«ГЁ ГіГ¦ГҐ ГҐГ±ГІГј Гў Г®Г·ГҐГ°ГҐГ¤ГЁ, ГіГ¤Г Г«ГїГҐГ¬, Г·ГІГ®ГЎГ» ГЇГҐГ°ГҐГ¬ГҐГ±ГІГЁГІГј Гў ГЄГ®Г­ГҐГ¶
         if (recentSensors.Contains(name))
         {
             Queue<string> temp = new Queue<string>();
@@ -25,10 +58,10 @@ public class Detector : MonoBehaviour
             recentSensors = temp;
         }
 
-        // Добавляем новое имя
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г­Г®ГўГ®ГҐ ГЁГ¬Гї
         recentSensors.Enqueue(name);
 
-        // Если превышаем лимит, удаляем старые
+        // Г…Г±Г«ГЁ ГЇГ°ГҐГўГ»ГёГ ГҐГ¬ Г«ГЁГ¬ГЁГІ, ГіГ¤Г Г«ГїГҐГ¬ Г±ГІГ Г°Г»ГҐ
         while (recentSensors.Count > maxRecords)
             recentSensors.Dequeue();
 
