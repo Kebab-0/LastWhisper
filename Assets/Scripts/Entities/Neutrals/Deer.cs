@@ -20,25 +20,24 @@ public class Deer : Entity
     {
         entityColor = Color.yellow;
 
-        // Спавн позиция
+        // РЎРїР°РІРЅ РїРѕР·РёС†РёСЏ
         spawnPosition = transform.position;
 
-        // Центр блуждания внутри рабочей зоны
+        // Р¦РµРЅС‚СЂ Р±Р»СѓР¶РґР°РЅРёСЏ РІРЅСѓС‚СЂРё СЂР°Р±РѕС‡РµР№ Р·РѕРЅС‹
         float centerDistance = Random.Range(50f, Entity.WORK_RADIUS * 0.8f);
         float centerAngle = Random.Range(0f, 2f * Mathf.PI);
         wanderCenter = CoordinateConverter.PolarToWorld2D(new Vector2(centerDistance, centerAngle));
 
-        // Первая цель
+        // РџРµСЂРІР°СЏ С†РµР»СЊ
         currentTarget = GetRandomWanderPoint();
 
-        // Скорость
-        
-            moveSpeed = 50f;
+        // РЎРєРѕСЂРѕСЃС‚СЊ (РјРѕР¶РЅРѕ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РІ РёРЅСЃРїРµРєС‚РѕСЂРµ)
+        EnsureMoveSpeed(50f);
 
         stateTimer = 0f;
         currentState = DeerState.MovingToArea;
 
-        Debug.Log($"Олень создан. Центр блуждания: {wanderCenter}");
+        Debug.Log($"РћР»РµРЅСЊ СЃРѕР·РґР°РЅ. Р¦РµРЅС‚СЂ Р±Р»СѓР¶РґР°РЅРёСЏ: {wanderCenter}");
     }
 
     protected override void Move()
@@ -70,7 +69,7 @@ public class Deer : Entity
             currentState = DeerState.Wandering;
             stateTimer = 0f;
             currentTarget = GetRandomWanderPoint();
-            Debug.Log("Олень достиг области блуждания");
+            Debug.Log("РћР»РµРЅСЊ РґРѕСЃС‚РёРі РѕР±Р»Р°СЃС‚Рё Р±Р»СѓР¶РґР°РЅРёСЏ");
         }
     }
 
@@ -87,7 +86,7 @@ public class Deer : Entity
             {
                 currentState = DeerState.Returning;
                 stateTimer = 0f;
-                Debug.Log("Олень начинает возвращение к месту спавна");
+                Debug.Log("РћР»РµРЅСЊ РЅР°С‡РёРЅР°РµС‚ РІРѕР·РІСЂР°С‰РµРЅРёРµ Рє РјРµСЃС‚Сѓ СЃРїР°РІРЅР°");
             }
             else
             {
@@ -103,7 +102,7 @@ public class Deer : Entity
 
         if (Vector3.Distance(transform.position, spawnPosition) < areaReachedDistance || stateTimer > 15f)
         {
-            Debug.Log("Олень вернулся к точке спавна и исчезает");
+            Debug.Log("РћР»РµРЅСЊ РІРµСЂРЅСѓР»СЃСЏ Рє С‚РѕС‡РєРµ СЃРїР°РІРЅР° Рё РёСЃС‡РµР·Р°РµС‚");
             DestroyEntity();
         }
     }
@@ -113,7 +112,7 @@ public class Deer : Entity
         Vector2 randomOffset = Random.insideUnitCircle * wanderRadius;
         Vector3 point = wanderCenter + new Vector3(randomOffset.x, randomOffset.y, 0);
 
-        // Не выходим за рабочий радиус
+        // РќРµ РІС‹С…РѕРґРёРј Р·Р° СЂР°Р±РѕС‡РёР№ СЂР°РґРёСѓСЃ
         if (point.magnitude > Entity.WORK_RADIUS)
         {
             point = point.normalized * Entity.WORK_RADIUS * 0.9f;
@@ -124,14 +123,14 @@ public class Deer : Entity
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // При приближении волка - убегаем быстрее
+        // РџСЂРё РїСЂРёР±Р»РёР¶РµРЅРёРё РІРѕР»РєР° - СѓР±РµРіР°РµРј Р±С‹СЃС‚СЂРµРµ
         MutantWolf wolf = other.GetComponent<MutantWolf>();
         if (wolf != null)
         {
-            moveSpeed *= 1.5f; // Ускоряемся
-            currentState = DeerState.Returning; // Начинаем возврат
+            moveSpeed *= 1.5f; // РЈСЃРєРѕСЂСЏРµРјСЃСЏ
+            currentState = DeerState.Returning; // РќР°С‡РёРЅР°РµРј РІРѕР·РІСЂР°С‚
             stateTimer = 0f;
-            Debug.Log("Олень испугался волка!");
+            Debug.Log("РћР»РµРЅСЊ РёСЃРїСѓРіР°Р»СЃСЏ РІРѕР»РєР°!");
         }
     }
 }

@@ -13,19 +13,19 @@ public class CommonFreak : Entity
     {
         entityColor = Color.magenta;
 
-        // Начальное направление
+        // РќР°С‡Р°Р»СЊРЅРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ
         moveDirection = Random.insideUnitCircle.normalized;
         moveDirection.z = 0;
 
-        // Скорость
-            moveSpeed = 40f;
+        // РЎРєРѕСЂРѕСЃС‚СЊ (РјРѕР¶РЅРѕ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РІ РёРЅСЃРїРµРєС‚РѕСЂРµ)
+        EnsureMoveSpeed(40f);
     }
 
     protected override void Move()
     {
         directionChangeTimer += Time.deltaTime;
 
-        // Меняем направление через интервал
+        // РњРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ С‡РµСЂРµР· РёРЅС‚РµСЂРІР°Р»
         if (directionChangeTimer >= directionChangeInterval)
         {
             moveDirection = Random.insideUnitCircle.normalized;
@@ -33,18 +33,18 @@ public class CommonFreak : Entity
             directionChangeTimer = 0f;
         }
 
-        // Двигаемся
+        // Р”РІРёРіР°РµРјСЃСЏ
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
-        // Не выходим за рабочий радиус
+        // РќРµ РІС‹С…РѕРґРёРј Р·Р° СЂР°Р±РѕС‡РёР№ СЂР°РґРёСѓСЃ
         float distanceFromCenter = transform.position.magnitude;
         if (distanceFromCenter > maxWanderRadius)
         {
-            // Возвращаемся к центру
+            // Р’РѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє С†РµРЅС‚СЂСѓ
             moveDirection = -transform.position.normalized;
         }
 
-        // Случайные повороты
+        // РЎР»СѓС‡Р°Р№РЅС‹Рµ РїРѕРІРѕСЂРѕС‚С‹
         if (Random.value < 0.01f)
         {
             float randomAngle = Random.Range(-45f, 45f);
@@ -54,14 +54,14 @@ public class CommonFreak : Entity
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // При столкновении с игроком или другой сущностью
+        // РџСЂРё СЃС‚РѕР»РєРЅРѕРІРµРЅРёРё СЃ РёРіСЂРѕРєРѕРј РёР»Рё РґСЂСѓРіРѕР№ СЃСѓС‰РЅРѕСЃС‚СЊСЋ
         Entity otherEntity = other.GetComponent<Entity>();
         if (otherEntity != null && otherEntity != this)
         {
-            // Наносим урон
+            // РќР°РЅРѕСЃРёРј СѓСЂРѕРЅ
             otherEntity.TakeDamage(damage);
 
-            // Отскакиваем
+            // РћС‚СЃРєР°РєРёРІР°РµРј
             moveDirection = -moveDirection;
         }
     }
