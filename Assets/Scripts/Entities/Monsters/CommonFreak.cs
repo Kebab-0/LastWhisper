@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class CommonFreak : Entity
 {
+    [SerializeField] private float detectionRadius = 10f;
+    [SerializeField] private float freezeDuration = 5f;
+    [SerializeField] private float lifetimeBeforeExit = 60f;
     private Vector3 moveDirection;
     private float directionChangeTimer;
     private float directionChangeInterval = 2f;
     private float maxWanderRadius = 120f;
+    private float freezeTimer;
+    private float lifeTimer;
+    private Transform currentTarget;
+    private bool isFreezing;
+    private bool isExiting;
 
     protected override bool UsePolarMovement => false;
 
@@ -23,6 +31,39 @@ public class CommonFreak : Entity
 
     protected override void Move()
     {
+        lifeTimer += Time.deltaTime;
+
+        if (lifeTimer >= lifetimeBeforeExit)
+        {
+            isExiting = true;
+        }
+
+        if (isExiting)
+        {
+            MoveInDirectionWorld(transform.position.normalized);
+            return;
+        }
+
+        if (isFreezing)
+        {
+            freezeTimer -= Time.deltaTime;
+            if (freezeTimer <= 0f)
+            {
+                isFreezing = false;
+                directionChangeTimer = directionChangeInterval; // сменим направление при выходе из заморозки
+            }
+
+            return;
+        }
+
+        AcquireTarget();
+
+        if (currentTarget != null)
+        {
+            ChaseTarget();
+            return;
+        }
+
         directionChangeTimer += Time.deltaTime;
 
         // Меняем направление через интервал
@@ -49,6 +90,53 @@ public class CommonFreak : Entity
         {
             float randomAngle = Random.Range(-45f, 45f);
             moveDirection = Quaternion.Euler(0, 0, randomAngle) * moveDirection;
+        }
+    }
+
+    private void AcquireTarget()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+        float bestDistance = detectionRadius + 1f;
+        currentTarget = null;
+
+        foreach (Collider2D hit in hits)
+        {
+            Entity entity = hit.GetComponent<Entity>();
+
+            if (entity is Deer || entity is Raccoon)
+            {
+                float distance = Vector3.Distance(transform.position, entity.transform.position);
+
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    currentTarget = entity.transform;
+                }
+            }
+        }
+    }
+
+    private void ChaseTarget()
+    {
+        if (currentTarget == null) return;
+
+        Vector3 targetPosition = currentTarget.position;
+        float distance = Vector3.Distance(transform.position, targetPosition);
+
+        MoveTowardsWorld(targetPosition);
+
+        if (distance <= 1f)
+        {
+            Entity targetEntity = currentTarget.GetComponent<Entity>();
+
+            if (targetEntity != null)
+            {
+                targetEntity.TakeDamage(float.MaxValue); // мгновенное убийство
+            }
+
+            currentTarget = null;
+            isFreezing = true;
+            freezeTimer = freezeDuration;
         }
     }
 
