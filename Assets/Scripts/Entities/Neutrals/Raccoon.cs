@@ -9,7 +9,10 @@ public class Raccoon : Entity
     private Vector3 exitPosition;
     private Vector3 centerPosition;
     private float journeyTime;
-    private float phaseDuration = 3f;
+    private float moveToCenterDuration;
+    private float centerCrossDuration;
+    private float moveToExitDuration;
+    private float centerOrbitRadius = 15f;
 
     protected override bool UsePolarMovement => false;
 
@@ -31,6 +34,11 @@ public class Raccoon : Entity
         // Скорость (можно переопределить в инспекторе)
         EnsureMoveSpeed(60f);
 
+        // Рассчитываем длительности фаз на основе скорости из инспектора
+        moveToCenterDuration = CalculateDuration(startPosition, centerPosition, moveSpeed);
+        centerCrossDuration = CalculateDuration(2f * Mathf.PI * centerOrbitRadius, moveSpeed);
+        moveToExitDuration = CalculateDuration(centerPosition, exitPosition, moveSpeed);
+
         journeyTime = 0f;
         currentState = RaccoonState.MovingToCenter;
 
@@ -43,7 +51,7 @@ public class Raccoon : Entity
             return;
 
         journeyTime += Time.deltaTime;
-        float progress = journeyTime / phaseDuration;
+        float progress = GetCurrentProgress();
 
         switch (currentState)
         {
@@ -76,12 +84,11 @@ public class Raccoon : Entity
     private void CrossCenter(float progress)
     {
         // Вращаемся в центре
-        float radius = 15f;
         float angle = progress * 2f * Mathf.PI;
 
         Vector3 offset = new Vector3(
-            Mathf.Cos(angle) * radius,
-            Mathf.Sin(angle) * radius,
+            Mathf.Cos(angle) * centerOrbitRadius,
+            Mathf.Sin(angle) * centerOrbitRadius,
             0
         );
 
@@ -107,5 +114,37 @@ public class Raccoon : Entity
             Debug.Log("Енот достиг выхода и исчезает");
             DestroyEntity();
         }
+    }
+
+    private float GetCurrentProgress()
+    {
+        float duration = moveToCenterDuration;
+
+        switch (currentState)
+        {
+            case RaccoonState.Crossing:
+                duration = centerCrossDuration;
+                break;
+            case RaccoonState.MovingToExit:
+                duration = moveToExitDuration;
+                break;
+        }
+
+        if (duration <= 0f || float.IsInfinity(duration))
+            return 0f;
+
+        return journeyTime / duration;
+    }
+
+    private float CalculateDuration(Vector3 from, Vector3 to, float speed)
+    {
+        float distance = Vector3.Distance(from, to);
+        return CalculateDuration(distance, speed);
+    }
+
+    private float CalculateDuration(float pathLength, float speed)
+    {
+        if (speed <= 0.001f) return float.PositiveInfinity;
+        return Mathf.Max(pathLength / speed, 0.001f);
     }
 }

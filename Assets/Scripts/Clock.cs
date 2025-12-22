@@ -28,4 +28,11 @@ public class GameTime : MonoBehaviour
         if (timeText != null)
             timeText.text = timeString;
     }
+
+    public string GetFormattedTime()
+    {
+        int hours = Mathf.FloorToInt(gameTime);
+        int minutes = Mathf.FloorToInt((gameTime - hours) * 60);
+        return string.Format("{0:00}:{1:00}", hours, minutes);
+    }
 }

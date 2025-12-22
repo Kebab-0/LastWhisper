@@ -56,10 +56,12 @@ public class CommonFreak : Entity
             return;
         }
 
+        KillEntitiesInDetectionRadius();
         AcquireTarget();
 
         if (currentTarget != null)
         {
+            // Приоритетное убийство найденной цели
             ChaseTarget();
             return;
         }
@@ -151,6 +153,21 @@ public class CommonFreak : Entity
 
             // Отскакиваем
             moveDirection = -moveDirection;
+        }
+    }
+
+    private void KillEntitiesInDetectionRadius()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+
+        foreach (Collider2D hit in hits)
+        {
+            Entity entity = hit.GetComponent<Entity>();
+
+            if (entity != null && entity != this)
+            {
+                entity.TakeDamage(float.MaxValue);
+            }
         }
     }
 }
