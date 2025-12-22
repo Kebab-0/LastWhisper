@@ -4,26 +4,45 @@ using System.Collections.Generic;
 public class Sensors : MonoBehaviour
 {
     private Entity ownerEntity;
-        ownerEntity = GetComponent<Entity>();
-        if (ownerEntity == null)
-            ownerEntity = GetComponentInParent<Entity>();
 
-    public Color activeColor = Color.red;      // Öâåò àêòèâíîãî ñåíñîðà
-    public Color passiveColor = Color.gray;    // Öâåò ïàññèâíîãî ñåíñîðà
-    public Detector detector;                  // Ññûëêà íà Detector (UI)
+    public Color activeColor = Color.red;      // Цвет активного сенсора
+    public Color passiveColor = Color.gray;    // Цвет пассивного сенсора
+    [SerializeField] private Color manualHighlightColor = Color.yellow;
+    public Detector detector;                  // Ссылка на Detector (UI)
+    [SerializeField] private SliderResult sliderResult;
 
-    public float[] detectionDistances = new float[5] { 2f, 4f, 6f, 8f, 10f }; // Ðàäèóñû çîí
+    public float[] detectionDistances = new float[5] { 2f, 4f, 6f, 8f, 10f }; // Радиусы зон
 
     private Dictionary<int, Transform[]> sensors = new Dictionary<int, Transform[]>();
     private Dictionary<int, SpriteRenderer[]> renderers = new Dictionary<int, SpriteRenderer[]>();
 
-    private int prevRadius = -1;   // Ïîñëåäíèé àêòèâíûé ðàäèóñ
-    private int prevIndex = -1;    // Ïîñëåäíèé àêòèâíûé ñåíñîð
+    private int prevRadius = -1;   // Последний активный радиус
+    private int prevIndex = -1;    // Последний активный сенсор
+    private int manualRadius = -1;
+    private int manualIndex = -1;
 
     void Start()
     {
+        ownerEntity = GetComponent<Entity>();
+        if (ownerEntity == null)
+            ownerEntity = GetComponentInParent<Entity>();
+
         AutoFindDetector();
         AutoDetectSensors();
+        AutoRegisterSlider();
+    }
+
+    private void AutoRegisterSlider()
+    {
+        if (sliderResult == null)
+        {
+            sliderResult = detector != null ? detector.GetComponent<SliderResult>() : null;
+            if (sliderResult == null)
+                sliderResult = FindObjectOfType<SliderResult>();
+        }
+
+        if (sliderResult != null)
+            sliderResult.RegisterSensors(this);
     }
 
     // ------------------------------
@@ -112,45 +131,84 @@ public class Sensors : MonoBehaviour
             }
         }
 
-        // Äåàêòèâèðóåì ïðåäûäóùèé ñåíñîð
-        if (prevRadius != -1 && prevIndex != -1 &&
-            renderers.ContainsKey(prevRadius) &&
+        DeactivatePreviousSensor();
+        ApplyDetectionHighlight(nearestRadius, nearestIndex);
+        ApplyManualHighlight();
+    }
+
+    private void DeactivatePreviousSensor()
+    {
+        if (prevRadius == -1 || prevIndex == -1) return;
+
+        if (renderers.ContainsKey(prevRadius) &&
             renderers[prevRadius] != null &&
             prevIndex < renderers[prevRadius].Length &&
             renderers[prevRadius][prevIndex] != null)
         {
             renderers[prevRadius][prevIndex].color = passiveColor;
         }
+    }
 
-                detector.Detection(sensors[nearestRadius][nearestIndex].gameObject, ownerEntity);
-        if (nearestRadius != -1 && nearestIndex != -1 &&
-            sensors.ContainsKey(nearestRadius) &&
-            renderers.ContainsKey(nearestRadius) &&
-            sensors[nearestRadius] != null &&
-            renderers[nearestRadius] != null &&
-            nearestIndex < sensors[nearestRadius].Length &&
-            nearestIndex < renderers[nearestRadius].Length &&
-            sensors[nearestRadius][nearestIndex] != null &&
-            renderers[nearestRadius][nearestIndex] != null)
-        {
-            renderers[nearestRadius][nearestIndex].color = activeColor;
+    private void ApplyDetectionHighlight(int nearestRadius, int nearestIndex)
+    {
+        if (nearestRadius == -1 || nearestIndex == -1) return;
 
-            // Äåòåêòîð ñðàáàòûâàåò òîëüêî ïðè ñìåíå ñåíñîðà
-            bool isNewSensor = (nearestRadius != prevRadius || nearestIndex != prevIndex);
-
-            prevRadius = nearestRadius;
-            prevIndex = nearestIndex;
-
-            if (detector != null && isNewSensor)
-            {
-                detector.Detection(sensors[nearestRadius][nearestIndex].gameObject);
-            }
-
-        }
-        else
+        if (!sensors.ContainsKey(nearestRadius) ||
+            !renderers.ContainsKey(nearestRadius) ||
+            sensors[nearestRadius] == null ||
+            renderers[nearestRadius] == null ||
+            nearestIndex >= sensors[nearestRadius].Length ||
+            nearestIndex >= renderers[nearestRadius].Length ||
+            sensors[nearestRadius][nearestIndex] == null ||
+            renderers[nearestRadius][nearestIndex] == null)
         {
             prevRadius = -1;
             prevIndex = -1;
+            return;
         }
+
+        renderers[nearestRadius][nearestIndex].color = activeColor;
+
+        bool isNewSensor = (nearestRadius != prevRadius || nearestIndex != prevIndex);
+
+        prevRadius = nearestRadius;
+        prevIndex = nearestIndex;
+
+        if (detector != null && isNewSensor)
+        {
+            detector.Detection(sensors[nearestRadius][nearestIndex].gameObject, ownerEntity);
+            int sensorCode = nearestRadius * 10 + (nearestIndex + 1);
+            detector.TryPlaySensorSound(sensorCode);
+        }
+    }
+
+    private void ApplyManualHighlight()
+    {
+        if (manualRadius == -1 || manualIndex == -1) return;
+
+        if (!renderers.ContainsKey(manualRadius) ||
+            renderers[manualRadius] == null ||
+            manualIndex >= renderers[manualRadius].Length ||
+            renderers[manualRadius][manualIndex] == null)
+        {
+            return;
+        }
+
+        renderers[manualRadius][manualIndex].color = manualHighlightColor;
+    }
+
+    public void HighlightSensorByCode(int sensorCode)
+    {
+        int radius = sensorCode / 10;
+        int sensorNumber = sensorCode % 10;
+
+        if (radius < 1 || sensorNumber < 1) return;
+        if (!sensors.ContainsKey(radius) || sensors[radius] == null) return;
+        if (sensorNumber > sensors[radius].Length) return;
+
+        manualRadius = radius;
+        manualIndex = sensorNumber - 1;
+
+        ApplyManualHighlight();
     }
 }
