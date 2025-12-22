@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 10
+  moveSpeed: 1
   movementSound: {fileID: 0}
   entityColor: {r: 1, g: 1, b: 1, a: 1}
   entityMaterial: {fileID: 0}
@@ -144,7 +145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Sensors
   activeColor: {r: 1, g: 0, b: 0, a: 1}
   passiveColor: {r: 0.15294118, g: 0.50980395, b: 0.098039225, a: 1}
+  manualHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   detector: {fileID: 0}
+  sliderResult: {fileID: 0}
   detectionDistances:
   - 15
   - 30

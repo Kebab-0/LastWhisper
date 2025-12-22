@@ -44,7 +44,6 @@ public class Sensors : MonoBehaviour
         if (sliderResult != null)
             sliderResult.RegisterSensors(this);
     }
-
     // ------------------------------
     // Àâòî-íàõîäèì Detector
     // ------------------------------
