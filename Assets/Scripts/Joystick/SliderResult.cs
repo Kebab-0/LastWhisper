@@ -5,6 +5,7 @@ public class SliderResult : MonoBehaviour
     public VerticalDiscreteSlider2D slider1;
     public VerticalDiscreteSlider2D slider2;
     public Detector detector;
+    [SerializeField] private Sensors sensors;
     public bool playOnChangeOnly = true;
 
     private int lastResult = -1;
@@ -20,6 +21,7 @@ public class SliderResult : MonoBehaviour
         {
             lastResult = result;
             TryPlaySensorSound(result);
+            HighlightSelectedSensor(result);
         }
     }
 
@@ -29,5 +31,16 @@ public class SliderResult : MonoBehaviour
             return;
 
         detector.TryPlaySensorSound(result);
+    }
+
+    private void HighlightSelectedSensor(int result)
+    {
+        if (sensors == null) return;
+        sensors.HighlightSensorByCode(result);
+    }
+
+    public void RegisterSensors(Sensors targetSensors)
+    {
+        sensors = targetSensors;
     }
 }
